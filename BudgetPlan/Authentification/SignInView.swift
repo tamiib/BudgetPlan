@@ -31,7 +31,7 @@ final class SignInEmailViewModel: ObservableObject{
     }
 }
 
-struct SignInEmailView: View {
+struct SignInView: View {
     @StateObject private var viewModel = SignInEmailViewModel()
     @Binding var showSignInView: Bool
     
@@ -86,6 +86,6 @@ struct SignInEmailView: View {
 
 #Preview {
     NavigationStack {
-        SignInEmailView(showSignInView: .constant(false))
+        SignInView(showSignInView: .constant(false))
     }
 }
