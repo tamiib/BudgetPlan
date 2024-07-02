@@ -14,7 +14,7 @@ struct RootView: View {
     var body: some View {
         ZStack{
             if !showSignInView {
-                ProfileView(showSignInView: $showSignInView)
+                TransactionView(showSignInView: $showSignInView)
             }
         }
         .onAppear{
