@@ -8,28 +8,29 @@
 import SwiftUI
 
 struct RootView: View {
-    
-    @State private var showSignInView = false;
-    
+    @State private var showSignInView = false
+
     var body: some View {
-        ZStack{
-            if !showSignInView {
-                TransactionView(showSignInView: $showSignInView)
+        ZStack {
+            if showSignInView {
+                SignInView(showSignInView: $showSignInView)
+            } else {
+                MainView(showSignInView: $showSignInView)
             }
         }
-        .onAppear{
-            let authUser = try? AuthenticationManager.shared.getAuthenticatedUser()
-            self.showSignInView = authUser == nil
-        }
-        .fullScreenCover(isPresented: $showSignInView){
-            NavigationStack{
-                SignInView(showSignInView: .constant(false))
+        .onAppear {
+            do {
+                let authUser = try AuthenticationManager.shared.getAuthenticatedUser()
+                self.showSignInView = authUser == nil
+            } catch {
+                self.showSignInView = true
             }
-            
         }
     }
 }
 
-#Preview {
-    RootView()
+struct RootView_Previews: PreviewProvider {
+    static var previews: some View {
+        RootView()
+    }
 }

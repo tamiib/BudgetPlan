@@ -16,7 +16,7 @@ struct BudgetPlanApp: App {
  
     var body: some Scene {
         WindowGroup {
-            RootView()
+            RootView().background(Color("BackgroundColor").ignoresSafeArea())
         }
     }
 }
