@@ -18,8 +18,6 @@ final class TransactionManager {
             completion([])
             return
         }
-        
-       
 
         db.collection("transactions")
             .whereField("userId", isEqualTo: userID)
@@ -41,7 +39,9 @@ final class TransactionManager {
                         bankAccountName: data["bankAccountName"] as? String ?? "",
                         created: (data["created"] as? Timestamp)?.dateValue() ?? Date(),
                         category: data["category"] as? String ?? "",
-                        expense: data["expense"] as? Bool ?? false
+                        expense: data["expense"] as? Bool ?? true,
+                        currency: data["currency"] as? String ?? "",
+                        sorted: data["sorted"] as? Bool ?? false
                     )
                     transactions.append(transaction)
                 }
@@ -49,5 +49,35 @@ final class TransactionManager {
                 completion(transactions)
             }
     }
+
+    func updateTransaction(_ transaction: TransactionViewModel, completion: @escaping (Error?) -> Void) {
+        Task {
+            await MainActor.run {
+                guard let userID = Auth.auth().currentUser?.uid else {
+                    print("No authenticated user")
+                    completion(NSError(domain: "", code: 401, userInfo: [NSLocalizedDescriptionKey: "No authenticated user"]))
+                    return
+                }
+
+                let transactionData: [String: Any] = [
+                    "amount": transaction.amount,
+                    "description": transaction.description,
+                    "bankAccountName": transaction.bankAccountName,
+                    "created": transaction.created,
+                    "category": transaction.category,
+                    "expense": transaction.expense,
+                    "currency": transaction.currency,
+                    "sorted": transaction.sorted,
+                    "userId": userID
+                ]
+
+                db.collection("transactions").document(transaction.id).updateData(transactionData) { error in
+                    completion(error)
+                }
+            }
+        }
+    }
 }
+
+
 

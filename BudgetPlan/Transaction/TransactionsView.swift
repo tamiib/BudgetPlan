@@ -11,6 +11,15 @@ struct TransactionsView: View {
     private let transactionManager = TransactionManager()
     @State private var transactions: [TransactionViewModel] = []
     @State private var lastUpdated: Date?
+    @State private var selectedTab: Tab = .unsorted
+    @State private var selectedTransaction: TransactionViewModel?
+    @State private var selectedCategory: CategoryViewModel?
+   
+
+    enum Tab: String, CaseIterable {
+        case unsorted = "Unsorted"
+        case sorted = "Sorted"
+    }
 
     var body: some View {
         NavigationView {
@@ -28,8 +37,24 @@ struct TransactionsView: View {
                         }
                     }
 
-                    ForEach(transactions, id: \.id) { transaction in
-                        TransactionCardView(transaction: transaction)
+                    Picker("Select Transactions", selection: $selectedTab) {
+                        ForEach(Tab.allCases, id: \.self) { tab in
+                            Text(tab.rawValue).tag(tab)
+                        }
+                    }
+                    .pickerStyle(SegmentedPickerStyle())
+                    .padding(.bottom, 10)
+
+                    ScrollView {
+                        LazyVStack(spacing: 10) {
+                            ForEach(filteredTransactions, id: \.id) { transaction in
+                                TransactionCardView(transaction: transaction)
+                                    .onTapGesture {
+                                            self.selectedTransaction = transaction
+                                    }
+
+                            }
+                        }
                     }
 
                     Spacer()
@@ -64,28 +89,41 @@ struct TransactionsView: View {
                                 .imageScale(.large)
                         }
                         Button(action: {
-                                           addTransaction()
-                                       }) {
-                                           Image(systemName: "plus")
-                                               .imageScale(.medium)
-                                               .padding(5)
-                                               .background(Color("AccentColor"))
-                                               .clipShape(Circle())
-                                               .foregroundColor(.white)
-                                       }
+                            addTransaction()
+                        }) {
+                            Image(systemName: "plus")
+                                .imageScale(.medium)
+                                .padding(5)
+                                .background(Color("AccentColor"))
+                                .clipShape(Circle())
+                                .foregroundColor(.white)
+                        }
                     }.padding(.top, 50)
                 }
-                
             }
             .onAppear {
                 loadTransactions()
             }
+            .sheet(item: $selectedTransaction, onDismiss: {
+                    selectedTransaction = nil
+                    loadTransactions()
+                      }) { transaction in
+                          TransactionDetailSheet(transaction: transaction, selectedCategory: $selectedCategory)
+                      }
+        }
+    }
+
+    private var filteredTransactions: [TransactionViewModel] {
+        switch selectedTab {
+        case .unsorted:
+            return transactions.filter { !$0.sorted }
+        case .sorted:
+            return transactions.filter { $0.sorted }
         }
     }
 
     private func sortAllTransactions() {
-        // Ovdje implementirajte logiku za sortiranje
-        transactions.sort { $0.amount < $1.amount }
+        transactions = transactions.map { var t = $0; t.sorted = true; return t }
     }
 
     private func loadTransactions() {
@@ -93,11 +131,14 @@ struct TransactionsView: View {
             DispatchQueue.main.async {
                 self.transactions = transactions
                 self.lastUpdated = Date()
+               
+              
             }
         }
     }
 
     private func refreshTransactions() {
+        print("refresh")
         loadTransactions()
     }
     
@@ -112,3 +153,4 @@ private let timeFormatter: DateFormatter = {
     formatter.dateFormat = "HH:mm'h'"
     return formatter
 }()
+

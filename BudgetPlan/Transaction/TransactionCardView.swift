@@ -36,7 +36,7 @@ struct TransactionCardView: View {
                     .font(.subheadline)
                     .foregroundColor(.black)
             }
-            .frame(width: UIScreen.main.bounds.width / 6)
+            .frame(width: UIScreen.main.bounds.width / 12)
             
            
             VStack(alignment: .leading, spacing: 4) {
@@ -45,6 +45,7 @@ struct TransactionCardView: View {
                     .foregroundColor(.black)
                     .lineLimit(2)
                     .truncationMode(.tail)
+                    .frame(minHeight: 40, maxHeight: .infinity)
                 
                 Text(transaction.bankAccountName)
                     .font(.subheadline)
@@ -52,20 +53,34 @@ struct TransactionCardView: View {
                     .lineLimit(1)
                     .truncationMode(.tail)
             }
-            .frame(width: UIScreen.main.bounds.width * 3 / 6)
+            .frame(width: UIScreen.main.bounds.width * 6 / 12)
             
            
             VStack(alignment: .trailing, spacing: 4) {
-                Text(String(format: "%.2f", transaction.amount))
-                    .font(.body)
-                    .foregroundColor(amountColor)
+                if transaction.expense{
+                    Text("-" + String(format: "%.2f", transaction.amount) + transaction.currency)
+                        .font(.custom("SF Pro Display", size: 18))
+                        .fontWeight(.semibold)
+                        .lineLimit(1)
+                        .frame(height: 22)
+                        .multilineTextAlignment(.trailing)
+                }
+                else {
+                    Text(String(format: "%.2f", transaction.amount) + transaction.currency)
+                        .font(.custom("SF Pro Display", size: 18))
+                        .fontWeight(.semibold)
+                        .lineLimit(1)
+                        .frame(height: 22)
+                        .foregroundColor(amountColor)
+                        .multilineTextAlignment(.trailing)
+                }
             }
             .frame(maxWidth: .infinity, alignment: .trailing)
         }
+        .frame(height: 86)
         .padding()
         .background(Color.white)
         .cornerRadius(10)
-        .shadow(radius: 5) 
     }
 }
 
