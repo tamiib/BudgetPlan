@@ -31,7 +31,7 @@ struct FlowLayout: View {
                         }
                         let result = width
                         if category.id == self.categories.last!.id {
-                            width = 0 // last item
+                            width = 0
                         } else {
                             width -= d.width
                         }
@@ -40,7 +40,7 @@ struct FlowLayout: View {
                     .alignmentGuide(.top, computeValue: { d in
                         let result = height
                         if category.id == self.categories.last!.id {
-                            height = 0 // last item
+                            height = 0
                         }
                         return result
                     })

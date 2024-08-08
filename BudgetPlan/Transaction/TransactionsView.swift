@@ -55,7 +55,6 @@ struct TransactionsView: View {
                                             self.selectedTransaction = transaction
                                         }
                                     }
-
                             }
                         }
                     }
@@ -134,8 +133,6 @@ struct TransactionsView: View {
             DispatchQueue.main.async {
                 self.transactions = transactions
                 self.lastUpdated = Date()
-               
-              
             }
         }
     }

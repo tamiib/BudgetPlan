@@ -12,14 +12,12 @@ struct BudgetCardView: View {
 
     var body: some View {
         VStack(alignment: .leading) {
-            // Prvi red: Ime budžeta sa ikonom
             HStack {
-                Text(budget.categoryIcon)
+                Text(budget.icon)
                 Text(budget.name)
                     .font(.headline)
             }
-
-            // Drugi red: Procenat preostalog iznosa kao grafički prikaz
+            
             HStack {
                 GeometryReader { geometry in
                     ZStack(alignment: .leading) {
@@ -30,18 +28,17 @@ struct BudgetCardView: View {
 
                         Rectangle()
                             .frame(width: min(CGFloat(self.budget.leftAmount / self.budget.amount) * geometry.size.width, geometry.size.width), height: 10)
-                            .foregroundColor(.blue)
+                            .foregroundColor(Color("AccentColor"))
                     }
                 }
             }
             .frame(height: 10)
 
-            // Treći red: Tekst "Left:" i preostali iznos
             HStack {
                 Text("Left:")
                     .font(.subheadline)
                 Spacer()
-                Text(String(format: "%.2f", budget.amount) + budget.currency)
+                Text(String(format: "%.2f", budget.leftAmount) + budget.currency)
                     .font(.subheadline)
                     .fontWeight(.bold)
             }

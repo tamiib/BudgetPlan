@@ -8,18 +8,34 @@
 import Foundation
 import FirebaseFirestoreSwift
 
-struct BudgetsViewModel: Identifiable, Equatable, Encodable, Decodable {
-    let id: UUID
+import Foundation
+import FirebaseFirestoreSwift
+
+struct BudgetsViewModel: Identifiable, Equatable, Codable {
+    let id: String
     let name: String
-    let categoryName: String
-    let categoryIcon: String
+    let categoryIds: [String]
     let amount: Double
-    let leftAmount: Double
+    var leftAmount: Double
     let expense: Bool
     let currency: String
+    let icon: String
 
     var idString: String {
-        return id.uuidString
+        return id
+    }
+
+    init(id: String = UUID().uuidString, name: String, categoryIds: [String], amount: Double, leftAmount: Double, expense: Bool, currency: String, icon: String) {
+        self.id = id
+        self.name = name
+        self.categoryIds = categoryIds
+        self.amount = amount
+        self.leftAmount = leftAmount
+        self.expense = expense
+        self.currency = currency
+        self.icon = icon
     }
 }
+
+
 

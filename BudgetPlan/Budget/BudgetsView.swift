@@ -10,7 +10,7 @@ import FirebaseFirestore
 
 struct BudgetsView: View {
     @State private var budgets: [BudgetsViewModel] = []
-    @State private var selectedTab: Bool = true // true for expenses, false for incomes
+    @State private var selectedTab: Bool = true
     @State private var budgetManager = BudgetManager()
 
     var body: some View {

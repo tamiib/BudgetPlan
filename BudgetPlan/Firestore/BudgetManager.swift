@@ -17,28 +17,27 @@ class BudgetManager {
             if let error = error {
                 completion(nil, error)
             } else {
-                var budgets : [BudgetsViewModel] = []
+                var budgets: [BudgetsViewModel] = []
                 for document in querySnapshot!.documents {
                     let data = document.data()
-                    let id = data["id"] as? UUID ?? UUID()
+                    let id = data["id"] as? String ?? ""
                     let name = data["name"] as? String ?? ""
-                    let categoryName = data["categoryName"] as? String ?? ""
-                    let categoryIcon = data["categoryIcon"] as? String ?? ""
-                    let amount = data["amount"] as? Double? ?? 0.0
-                    let leftAmount = data["leftAmount"] as? Double? ?? 0.0
-                    let expense = data["expense"] as? Bool? ?? true
+                    let categoryIds = data["categoryIds"] as? [String] ?? []
+                    let amount = data["amount"] as? Double ?? 0.0
+                    let leftAmount = data["leftAmount"] as? Double ?? 0.0
+                    let expense = data["expense"] as? Bool ?? true
                     let currency = data["currency"] as? String ?? ""
+                    let icon = data["icon"] as? String ?? ""
+
+                    let budget = BudgetsViewModel(id: id, name: name, categoryIds: categoryIds, amount: amount, leftAmount: leftAmount, expense: expense, currency: currency, icon: icon)
                     
-                    let budget = BudgetsViewModel(id: id, name: name, categoryName: categoryName, categoryIcon: categoryIcon, amount: amount!, leftAmount: leftAmount! , expense: expense!, currency: currency)
-                    
-                   budgets.append(budget)
+                    budgets.append(budget)
                 }
                 completion(budgets, nil)
             }
         }
     }
 
-    // Metoda za ažuriranje budžeta
     func updateBudget(budget: BudgetsViewModel, completion: @escaping (Error?) -> Void) {
         let docID = budget.idString
 
@@ -51,7 +50,6 @@ class BudgetManager {
         }
     }
 
-    // Metoda za dodavanje novog budžeta
     func addBudget(budget: BudgetsViewModel, completion: @escaping (Error?) -> Void) {
         do {
             let document = db.collection("budgets").document(budget.idString)

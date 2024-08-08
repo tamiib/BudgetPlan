@@ -19,9 +19,11 @@ class CategoryManager {
                 var categories: [CategoryViewModel] = []
                 for document in querySnapshot!.documents {
                     let data = document.data()
+                    let id = data["id"] as? String ?? ""
                     let name = data["name"] as? String ?? ""
                     let icon = data["icon"] as? String ?? ""
-                    let category = CategoryViewModel(name: name, icon: icon)
+                    let budgetId = data["budgetId"] as? String ?? ""
+                    let category = CategoryViewModel(id: id, name: name, icon: icon, budgetId: budgetId)
                     categories.append(category)
                 }
                 completion(categories, nil)

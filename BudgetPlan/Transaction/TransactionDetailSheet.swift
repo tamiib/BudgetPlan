@@ -13,6 +13,7 @@ struct TransactionDetailSheet: View {
     private let transactionManager = TransactionManager()
     @State private var categories: [CategoryViewModel] = []
     private let categoryManager = CategoryManager()
+    private let budgetManager = BudgetManager()
     
     var body: some View {
         GeometryReader { geometry in
@@ -66,14 +67,23 @@ struct TransactionDetailSheet: View {
 
                         Spacer()
 
+
                         Button(action: {
                             if let selectedCategory = selectedCategory {
-                                transaction.categoryName = selectedCategory.name
-                                transaction.categoryIcon = selectedCategory.icon
-                                transaction.sorted = true
-                                updateTransaction(transaction)
+                                updateBudgetForCategory(selectedCategory, transactionAmount: transaction.amount) { success in
+                                    if success {
+                                        transaction.categoryName = selectedCategory.name
+                                        transaction.categoryIcon = selectedCategory.icon
+                                        transaction.sorted = true
+                                        updateTransaction(transaction) { success in
+                                            if success {
+                                                presentationMode.wrappedValue.dismiss()
+                                            }
+                                        }
+                                    }
+                                }
                             }
-                        }){
+                        }) {
                             Text("Set Category")
                                 .font(.headline)
                                 .padding()
@@ -109,12 +119,13 @@ struct TransactionDetailSheet: View {
         }
     }
     
-    private func updateTransaction(_ transaction: TransactionViewModel) {
+    private func updateTransaction(_ transaction: TransactionViewModel, completion: @escaping (Bool) -> Void) {
         transactionManager.updateTransaction(transaction) { error in
             if let error = error {
                 print("Error updating transaction: \(error.localizedDescription)")
+                completion(false)
             } else {
-                presentationMode.wrappedValue.dismiss()
+                completion(true)
             }
         }
     }
@@ -125,6 +136,40 @@ struct TransactionDetailSheet: View {
                 print("Error fetching categories: \(error.localizedDescription)")
             } else {
                 self.categories = categories ?? []
+            }
+        }
+    }
+
+    private func updateBudgetForCategory(_ category: CategoryViewModel, transactionAmount: Double, completion: @escaping (Bool) -> Void) {
+        guard let budgetId = category.budgetId else {
+            completion(false)
+            return
+        }
+
+        budgetManager.getAllBudgets { budgets, error in
+            if let error = error {
+                print("Error fetching budgets: \(error.localizedDescription)")
+                completion(false)
+                return
+            }
+
+            if let budgets = budgets {
+                if var budget = budgets.first(where: { $0.id == budgetId }) {
+                    budget.leftAmount -= transactionAmount
+
+                    budgetManager.updateBudget(budget: budget) { error in
+                        if let error = error {
+                            print("Error updating budget: \(error.localizedDescription)")
+                            completion(false)
+                        } else {
+                            completion(true)
+                        }
+                    }
+                } else {
+                    completion(false)
+                }
+            } else {
+                completion(false)
             }
         }
     }
