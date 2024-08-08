@@ -14,21 +14,23 @@ final class TransactionViewModel: ObservableObject, Identifiable {
     @Published var description: String
     @Published var bankAccountName: String
     @Published var created: Date
-    @Published var category: String
+    @Published var categoryName: String
     @Published var expense: Bool
     @Published var currency: String
     @Published var sorted: Bool
+    @Published var categoryIcon: String
 
-    init(id: String = UUID().uuidString, amount: Double = 0.0, description: String = "", bankAccountName: String = "", created: Date = Date(), category: String = "", expense: Bool = true, currency: String = "", sorted: Bool = false) {
+    init(id: String = UUID().uuidString, amount: Double = 0.0, description: String = "", bankAccountName: String = "", created: Date = Date(), categoryName: String = "", expense: Bool = true, currency: String = "", sorted: Bool = false, categoryIcon: String = "") {
         self.id = id
         self.amount = amount
         self.description = description
         self.bankAccountName = bankAccountName
         self.created = created
-        self.category = category
+        self.categoryName = categoryName
         self.expense = expense
         self.currency = currency
         self.sorted = sorted
+        self.categoryIcon = categoryIcon
     }
 }
 

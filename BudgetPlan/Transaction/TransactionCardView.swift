@@ -40,6 +40,17 @@ struct TransactionCardView: View {
             
            
             VStack(alignment: .leading, spacing: 4) {
+                if transaction.sorted {
+                    HStack(spacing: 8) {
+                        Text(transaction.categoryIcon)
+                        Text(transaction.categoryName)
+                            .font(.subheadline)
+                            .foregroundColor(.gray)
+                            .lineLimit(1)
+                            .truncationMode(.tail)
+                    }
+                }
+                
                 Text(transaction.description)
                     .font(.body)
                     .foregroundColor(.black)

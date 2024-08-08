@@ -38,10 +38,11 @@ final class TransactionManager {
                         description: data["description"] as? String ?? "",
                         bankAccountName: data["bankAccountName"] as? String ?? "",
                         created: (data["created"] as? Timestamp)?.dateValue() ?? Date(),
-                        category: data["category"] as? String ?? "",
+                        categoryName: data["categoryName"] as? String ?? "",
                         expense: data["expense"] as? Bool ?? true,
                         currency: data["currency"] as? String ?? "",
-                        sorted: data["sorted"] as? Bool ?? false
+                        sorted: data["sorted"] as? Bool ?? false,
+                        categoryIcon: data["categoryIcon"] as? String ?? ""
                     )
                     transactions.append(transaction)
                 }
@@ -64,11 +65,12 @@ final class TransactionManager {
                     "description": transaction.description,
                     "bankAccountName": transaction.bankAccountName,
                     "created": transaction.created,
-                    "category": transaction.category,
+                    "categoryName": transaction.categoryName,
                     "expense": transaction.expense,
                     "currency": transaction.currency,
                     "sorted": transaction.sorted,
-                    "userId": userID
+                    "userId": userID,
+                    "categoryIcon": transaction.categoryIcon
                 ]
 
                 db.collection("transactions").document(transaction.id).updateData(transactionData) { error in

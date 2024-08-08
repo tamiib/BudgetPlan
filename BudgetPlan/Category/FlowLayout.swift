@@ -59,7 +59,7 @@ struct FlowLayout: View {
         .cornerRadius(10)
         .overlay(
             RoundedRectangle(cornerRadius: 10)
-                .stroke(self.selectedCategory == category ? Color.blue : Color.clear, lineWidth: 2)
+                .stroke(self.selectedCategory == category ? Color("AccentColor") : Color.clear, lineWidth: 2)
         )
         .onTapGesture {
             self.selectedCategory = category

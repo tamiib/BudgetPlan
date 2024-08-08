@@ -11,6 +11,8 @@ struct TransactionDetailSheet: View {
     @Binding var selectedCategory: CategoryViewModel?
     @Environment(\.presentationMode) var presentationMode
     private let transactionManager = TransactionManager()
+    @State private var categories: [CategoryViewModel] = []
+    private let categoryManager = CategoryManager()
     
     var body: some View {
         GeometryReader { geometry in
@@ -48,7 +50,7 @@ struct TransactionDetailSheet: View {
                         .padding(.top, 20)
                         .frame(maxWidth: .infinity, alignment: .leading)
 
-                    FlowLayout(categories: CategoryViewModel.getCategories(), selectedCategory: $selectedCategory)
+                    FlowLayout(categories: categories, selectedCategory: $selectedCategory)
 
                     HStack {
                         Button(action: {
@@ -66,7 +68,8 @@ struct TransactionDetailSheet: View {
 
                         Button(action: {
                             if let selectedCategory = selectedCategory {
-                                transaction.category = selectedCategory.name
+                                transaction.categoryName = selectedCategory.name
+                                transaction.categoryIcon = selectedCategory.icon
                                 transaction.sorted = true
                                 updateTransaction(transaction)
                             }
@@ -101,6 +104,9 @@ struct TransactionDetailSheet: View {
             }
         }
         .frame(maxHeight: .infinity, alignment: .top)
+        .onAppear(){
+            fetchCategories()
+        }
     }
     
     private func updateTransaction(_ transaction: TransactionViewModel) {
@@ -109,6 +115,16 @@ struct TransactionDetailSheet: View {
                 print("Error updating transaction: \(error.localizedDescription)")
             } else {
                 presentationMode.wrappedValue.dismiss()
+            }
+        }
+    }
+    
+    private func fetchCategories() {
+        categoryManager.getAllCategories { categories, error in
+            if let error = error {
+                print("Error fetching categories: \(error.localizedDescription)")
+            } else {
+                self.categories = categories ?? []
             }
         }
     }

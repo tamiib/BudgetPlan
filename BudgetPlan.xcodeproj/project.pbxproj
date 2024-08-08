@@ -35,6 +35,10 @@
 		0EFB35FD2C61316A00660128 /* TransactionDetailSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFB35FC2C61316A00660128 /* TransactionDetailSheet.swift */; };
 		0EFB36002C6403E800660128 /* FlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFB35FF2C6403E800660128 /* FlowLayout.swift */; };
 		0EFB36032C64087700660128 /* CategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFB36022C64087700660128 /* CategoryViewModel.swift */; };
+		0EFB36082C65421B00660128 /* CategoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFB36072C65421B00660128 /* CategoryManager.swift */; };
+		0EFB360A2C65496200660128 /* BudgetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFB36092C65496200660128 /* BudgetViewModel.swift */; };
+		0EFB360C2C654A5400660128 /* BudgetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFB360B2C654A5400660128 /* BudgetManager.swift */; };
+		0EFB360E2C655A7900660128 /* BudgetCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFB360D2C655A7900660128 /* BudgetCardView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -62,6 +66,10 @@
 		0EFB35FC2C61316A00660128 /* TransactionDetailSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDetailSheet.swift; sourceTree = "<group>"; };
 		0EFB35FF2C6403E800660128 /* FlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowLayout.swift; sourceTree = "<group>"; };
 		0EFB36022C64087700660128 /* CategoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewModel.swift; sourceTree = "<group>"; };
+		0EFB36072C65421B00660128 /* CategoryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryManager.swift; sourceTree = "<group>"; };
+		0EFB36092C65496200660128 /* BudgetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetViewModel.swift; sourceTree = "<group>"; };
+		0EFB360B2C654A5400660128 /* BudgetManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetManager.swift; sourceTree = "<group>"; };
+		0EFB360D2C655A7900660128 /* BudgetCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetCardView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,6 +147,8 @@
 			isa = PBXGroup;
 			children = (
 				0E2FCDC12C347DCD006F5FB8 /* BudgetsView.swift */,
+				0EFB36092C65496200660128 /* BudgetViewModel.swift */,
+				0EFB360D2C655A7900660128 /* BudgetCardView.swift */,
 			);
 			path = Budget;
 			sourceTree = "<group>";
@@ -181,6 +191,8 @@
 			children = (
 				0E7BDD2F2C28B0200030666F /* UserManager.swift */,
 				0E7BDD3C2C2C929B0030666F /* TransactionManager.swift */,
+				0EFB36072C65421B00660128 /* CategoryManager.swift */,
+				0EFB360B2C654A5400660128 /* BudgetManager.swift */,
 			);
 			path = Firestore;
 			sourceTree = "<group>";
@@ -300,16 +312,20 @@
 				0E7BDD3D2C2C929B0030666F /* TransactionManager.swift in Sources */,
 				0EFB36002C6403E800660128 /* FlowLayout.swift in Sources */,
 				0EFB35FD2C61316A00660128 /* TransactionDetailSheet.swift in Sources */,
+				0EFB360A2C65496200660128 /* BudgetViewModel.swift in Sources */,
 				0E7BDD2D2C28AE810030666F /* ProfileView.swift in Sources */,
 				0E2FCDC42C347E03006F5FB8 /* TransactionsView.swift in Sources */,
 				0E2959E52C036BFE001FC8B7 /* ContentView.swift in Sources */,
+				0EFB36082C65421B00660128 /* CategoryManager.swift in Sources */,
 				0E2FCDC62C3496DD006F5FB8 /* TransactionCardView.swift in Sources */,
 				0E2FCDC22C347DCD006F5FB8 /* BudgetsView.swift in Sources */,
 				0E2FCDC02C347DB1006F5FB8 /* AccountsView.swift in Sources */,
 				0E2959E32C036BFE001FC8B7 /* BudgetPlanApp.swift in Sources */,
 				0EFB36032C64087700660128 /* CategoryViewModel.swift in Sources */,
+				0EFB360E2C655A7900660128 /* BudgetCardView.swift in Sources */,
 				0E7BDD362C2B43520030666F /* SignInViewModel.swift in Sources */,
 				0E7BDD232C08D81D0030666F /* RootView.swift in Sources */,
+				0EFB360C2C654A5400660128 /* BudgetManager.swift in Sources */,
 				0E7BDD1F2C08C1630030666F /* SignInView.swift in Sources */,
 				0E2FCDB82C347965006F5FB8 /* SettingsViewModel.swift in Sources */,
 				0E7BDD212C08C3FB0030666F /* AuthenticationManager.swift in Sources */,

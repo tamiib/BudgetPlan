@@ -50,7 +50,10 @@ struct TransactionsView: View {
                             ForEach(filteredTransactions, id: \.id) { transaction in
                                 TransactionCardView(transaction: transaction)
                                     .onTapGesture {
+                                        if(!transaction.sorted)
+                                        {
                                             self.selectedTransaction = transaction
+                                        }
                                     }
 
                             }
