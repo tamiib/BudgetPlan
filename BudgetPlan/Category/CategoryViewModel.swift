@@ -6,11 +6,11 @@
 
 import Foundation
 
-struct CategoryViewModel: Identifiable, Equatable {
+struct CategoryViewModel: Identifiable, Equatable,Encodable, Decodable {
     let id: String
     let name: String
     let icon: String
-    let budgetId: String?
+    var budgetId: String?
 
     init(id: String = UUID().uuidString, name: String, icon: String, budgetId: String? = nil) {
         self.id = id

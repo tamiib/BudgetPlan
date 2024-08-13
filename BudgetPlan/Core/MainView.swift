@@ -37,13 +37,13 @@ struct MainView: View {
             }
 
             NavigationView {
-                AccountsView()
+                CategoryView()
             }
             .tabItem {
                 VStack {
-                    Image(systemName: "creditcard")
+                    Image(systemName: "rectangle.grid.2x2")
                         .foregroundColor(Color("SecondaryColor"))
-                    Text("Accounts")
+                    Text("Category")
                         .foregroundColor(Color("SecondaryColor"))
                     
                 }

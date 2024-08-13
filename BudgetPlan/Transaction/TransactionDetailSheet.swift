@@ -155,7 +155,12 @@ struct TransactionDetailSheet: View {
 
             if let budgets = budgets {
                 if var budget = budgets.first(where: { $0.id == budgetId }) {
-                    budget.leftAmount -= transactionAmount
+                    if(transaction.expense) {
+                        budget.leftAmount -= transactionAmount
+                    }
+                    else {
+                        budget.leftAmount += transactionAmount
+                    }
 
                     budgetManager.updateBudget(budget: budget) { error in
                         if let error = error {

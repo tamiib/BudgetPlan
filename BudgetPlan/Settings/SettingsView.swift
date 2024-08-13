@@ -8,40 +8,40 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @StateObject private var viewModel = ProfileViewModel()
     @Binding var showSignInView: Bool
     
     var body: some View {
-        List{
-            if let user = viewModel.user{
-                Text("User Id: \(user.userId)")
-                Text("Email: \(user.email)")
-            }
+        VStack {
+            // Profile section
+            ProfileView(userName: "John Doe", userEmail: "john.doe@gmail.com", userImage: Image("userProfileImage"))
+                .padding(.horizontal)
+        
+            AccountsView()
             
-            Button("Log out"){
-                Task{
-                    do{
-                        try viewModel.signOut()
-                        showSignInView = true;
-                    }
-                    catch{
-                        print("Error: \(error)")
-                        
-                    }
-                }
+            Spacer()
+            
+            // Log out button
+            Button(action: {
+                // Log out action
+                showSignInView = true
+            }) {
+                Text("Log out")
+                    .font(.headline)
+                    .foregroundColor(.white)
+                    .frame(height: 55)
+                    .frame(maxWidth: .infinity)
+                    .background(Color("DarkBrownColor"))
+                    .cornerRadius(10)
+                    .padding(.horizontal)
             }
+            .padding(.bottom, 20)
         }
-        .task{
-            try? await viewModel.loadCurrentUser()
-        }
-        .navigationTitle("Profile")
+        .padding(.top)
+        .background(Color("BackgroundColor"))
     }
 }
 
-struct SettingsView_Previews: PreviewProvider{
-    static var previews: some View {
-        NavigationStack{
-            SettingsView(showSignInView: .constant(false))
-        }
-    }
+#Preview {
+    SettingsView(showSignInView: .constant(false))
 }
+

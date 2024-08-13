@@ -12,7 +12,7 @@ import Foundation
 import FirebaseFirestoreSwift
 
 struct BudgetsViewModel: Identifiable, Equatable, Codable {
-    let id: String
+    var id: String
     let name: String
     let categoryIds: [String]
     let amount: Double

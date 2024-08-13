@@ -16,6 +16,10 @@ struct BudgetCardView: View {
                 Text(budget.icon)
                 Text(budget.name)
                     .font(.headline)
+                Spacer()
+                Text(String(format: "%.2f", budget.amount) + budget.currency)
+                    .font(.subheadline)
+                    .fontWeight(.bold)
             }
             
             HStack {
@@ -25,18 +29,27 @@ struct BudgetCardView: View {
                             .frame(width: geometry.size.width, height: 10)
                             .opacity(0.3)
                             .foregroundColor(.gray)
+                            .cornerRadius(10)
 
                         Rectangle()
                             .frame(width: min(CGFloat(self.budget.leftAmount / self.budget.amount) * geometry.size.width, geometry.size.width), height: 10)
                             .foregroundColor(Color("AccentColor"))
+                            .cornerRadius(10)
                     }
                 }
             }
             .frame(height: 10)
 
             HStack {
-                Text("Left:")
-                    .font(.subheadline)
+                if(budget.expense){
+                    Text("Left:")
+                        .font(.subheadline)
+                }
+                else {
+                    Text("Collected:")
+                        .font(.subheadline)
+                }
+            
                 Spacer()
                 Text(String(format: "%.2f", budget.leftAmount) + budget.currency)
                     .font(.subheadline)

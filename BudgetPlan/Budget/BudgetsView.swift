@@ -10,8 +10,12 @@ import FirebaseFirestore
 
 struct BudgetsView: View {
     @State private var budgets: [BudgetsViewModel] = []
+    @State private var categories: [CategoryViewModel] = [] // Dodano za praćenje kategorija
     @State private var selectedTab: Bool = true
     @State private var budgetManager = BudgetManager()
+    @State private var categoryManager = CategoryManager()
+    @State private var showingNewBudgetForm = false
+    @State private var currentExpense: Bool = true // State za praćenje trenutnog expense statusa
 
     var body: some View {
         NavigationView {
@@ -25,6 +29,9 @@ struct BudgetsView: View {
                     }
                     .pickerStyle(SegmentedPickerStyle())
                     .padding()
+                    .onChange(of: selectedTab) { newValue in
+                        currentExpense = newValue // Ažuriraj currentExpense prema odabranom tabu
+                    }
                     
                     ScrollView {
                         VStack {
@@ -39,35 +46,40 @@ struct BudgetsView: View {
                 }
             }
             .navigationBarTitleDisplayMode(.inline)
-                .toolbar {
-                    ToolbarItem(placement: .principal) {
-                        HStack {
-                            Text("Budgets")
-                                .font(.largeTitle)
-                                .fontWeight(.bold)
-                            Spacer()
-                            
-                            Button(action: {
-                                addBudget()
-                            }) {
-                                Image(systemName: "plus")
-                                    .imageScale(.medium)
-                                    .padding(5)
-                                    .background(Color("AccentColor"))
-                                    .clipShape(Circle())
-                                    .foregroundColor(.white)
-                            }
-                        }.padding(.top, 50)
-                    }
-               
-            }
-                .onAppear {
-                    loadBudgets()
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    HStack {
+                        Text("Budgets")
+                            .font(.largeTitle)
+                            .fontWeight(.bold)
+                        Spacer()
+                        
+                        Button(action: {
+                            showingNewBudgetForm.toggle()
+                        }) {
+                            Image(systemName: "plus")
+                                .imageScale(.medium)
+                                .padding(5)
+                                .background(Color("AccentColor"))
+                                .clipShape(Circle())
+                                .foregroundColor(.white)
+                        }
+                    }.padding(.top, 50)
                 }
+            }
+            .onAppear {
+                loadBudgets()
+                loadCategories()
+            }
+            .sheet(isPresented: $showingNewBudgetForm) {
+                NewBudgetFormView(isPresented: $showingNewBudgetForm, initialExpense: currentExpense, categories: getValidCategories(), onSave: { newBudget in
+                    self.budgets.append(newBudget)
+                })
+                .background(Color("BackgroundColor")) 
+            }
         }
     }
         
-
     private var filteredBudgets: [BudgetsViewModel] {
         budgets.filter { $0.expense == selectedTab }
     }
@@ -82,10 +94,23 @@ struct BudgetsView: View {
         }
     }
 
-    private func addBudget() {
-        // Implementacija za dodavanje budžeta
+    private func loadCategories() {
+        categoryManager.getAllCategories { categories, error in
+            if let categories = categories {
+                self.categories = categories
+            } else if let error = error {
+                print("Error fetching categories: \(error.localizedDescription)")
+            }
+        }
     }
+    
+    private func getValidCategories() -> [CategoryViewModel] {
+           return categories.filter { $0.budgetId == nil || $0.budgetId?.isEmpty == true }
+       }
 }
+
+
+
 
 
 

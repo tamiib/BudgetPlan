@@ -50,7 +50,7 @@ class BudgetManager {
         }
     }
 
-    func addBudget(budget: BudgetsViewModel, completion: @escaping (Error?) -> Void) {
+    func addNewBudget(budget: BudgetsViewModel, completion: @escaping (Error?) -> Void) {
         do {
             let document = db.collection("budgets").document(budget.idString)
             try document.setData(from: budget) { error in

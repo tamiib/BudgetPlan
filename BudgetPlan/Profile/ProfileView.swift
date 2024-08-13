@@ -6,58 +6,37 @@
 //
 
 import SwiftUI
-@MainActor
-final class ProfileViewModel: ObservableObject{
-    
-    @Published private(set) var user: DBUser? = nil
-    
-    
-    func loadCurrentUser() async  throws {
-        let authDataResult =  try  AuthenticationManager.shared.getAuthenticatedUser()
-        self.user = try await UserManager.shared.getUser(userId: authDataResult.uid)
-    }
-    
-    func signOut() throws{
-      try  AuthenticationManager.shared.signOut()
-    }
-}
 
 struct ProfileView: View {
-    
-    @StateObject private var viewModel = ProfileViewModel()
-    @Binding var showSignInView: Bool
+    var userName: String
+    var userEmail: String
+    var userImage: Image
     
     var body: some View {
-        List{
-            if let user = viewModel.user{
-                Text("User Id: \(user.userId)")
-                Text("Email: \(user.email)")
-            }
+        HStack(spacing: 16) {
+            userImage
+                .resizable()
+                .scaledToFill()
+                .frame(width: 60, height: 60)
+                .clipShape(Circle())
+                .shadow(radius: 5)
             
-            Button("Log out"){
-                Task{
-                    do{
-                        try viewModel.signOut()
-                        showSignInView = true;
-                    }
-                    catch{
-                        print("Error: \(error)")
-                        
-                    }
-                }
+            VStack(alignment: .leading, spacing: 4) {
+                Text(userName)
+                    .font(.title2)
+                    .fontWeight(.bold)
+                    .foregroundColor(.black)
+                
+                Text(userEmail)
+                    .font(.subheadline)
+                    .foregroundColor(.gray)
             }
         }
-        .task{
-            try? await viewModel.loadCurrentUser()
-        }
-        .navigationTitle("Profile")
+        .padding(.vertical)
     }
 }
 
-struct ProfileView_Previews: PreviewProvider{
-    static var previews: some View {
-        NavigationStack{
-            ProfileView(showSignInView: .constant(false))
-        }
-    }
+#Preview {
+    ProfileView(userName: "John Doe", userEmail: "john.doe@gmail.com", userImage: Image("userProfileImage"))
 }
+

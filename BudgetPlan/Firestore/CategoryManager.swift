@@ -41,5 +41,17 @@ class CategoryManager {
             completion(error)
         }
     }
+    
+    func updateCategory(category: CategoryViewModel, completion: @escaping (Error?) -> Void) {
+        let docID = category.id
+
+        do {
+            try db.collection("categories").document(docID).setData(from: category) { error in
+                completion(error)
+            }
+        } catch let error {
+            completion(error)
+        }
+    }
 }
 

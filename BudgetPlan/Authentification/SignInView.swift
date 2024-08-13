@@ -12,6 +12,11 @@ struct SignInView: View {
     @StateObject private var viewModel = SignInEmailViewModel()
     @Binding var showSignInView: Bool
     
+    
+    private var darkBrownColor: Color {
+        Color("DarkBrownColor")
+    }
+    
     var body: some View {
         VStack{
             
@@ -25,33 +30,37 @@ struct SignInView: View {
                 .font(.largeTitle)
                 .fontWeight(.bold)
                 .padding(.bottom, 50)
+                .foregroundColor(darkBrownColor)
+                
             
             VStack(alignment: .leading, spacing:5) {
                 Text("Email")
                     .font(.headline)
-                    .foregroundColor(Color.gray)
+                    .foregroundColor(darkBrownColor)
                 TextField("", text: $viewModel.email)
                     .padding()
                     .background(Color.white)
                     .cornerRadius(10)
                     .overlay(
                         RoundedRectangle(cornerRadius: 10)
-                            .stroke(Color.gray, lineWidth: 1)
+                            .stroke(darkBrownColor, lineWidth: 1)
                     )
+                    .autocapitalization(.none)
+                    .keyboardType(.emailAddress)
             }
             .padding(.horizontal, 15)
             
             VStack(alignment: .leading, spacing: 5) {
                  Text("Password")
                      .font(.headline)
-                     .foregroundColor(Color.gray)
+                     .foregroundColor(darkBrownColor)
                  SecureField("", text: $viewModel.password)
                      .padding()
                      .background(Color.white)
                      .cornerRadius(10)
                      .overlay(
                          RoundedRectangle(cornerRadius: 10)
-                             .stroke(Color.gray, lineWidth: 1)
+                             .stroke(darkBrownColor, lineWidth: 1)
                      )
              }
             .padding(.bottom, 12)
@@ -83,7 +92,7 @@ struct SignInView: View {
                     .foregroundColor(.white)
                     .frame(height: 55)
                     .frame(maxWidth: .infinity)
-                    .background(Color.blue)
+                    .background(darkBrownColor)
                     .cornerRadius(10)
                     .padding(.horizontal, 15)
             }
@@ -95,6 +104,7 @@ struct SignInView: View {
                 }) {
                     Text("Sign up")
                         .fontWeight(.bold)
+                        .foregroundColor(darkBrownColor)
                 }
             }
             .padding(.top, 20)
@@ -102,9 +112,6 @@ struct SignInView: View {
             Spacer()
         }
         .padding()
-        .navigationDestination(isPresented: $viewModel.isSignedIn) {
-                      ProfileView(showSignInView: $showSignInView)
-                  }
     }
 }
 

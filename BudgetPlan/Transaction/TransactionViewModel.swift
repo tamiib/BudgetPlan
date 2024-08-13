@@ -7,7 +7,7 @@
 
 import Foundation
 
-@MainActor
+
 final class TransactionViewModel: ObservableObject, Identifiable {
     let id: String
     @Published var amount: Double
