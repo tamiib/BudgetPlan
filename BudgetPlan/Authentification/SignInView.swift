@@ -12,7 +12,6 @@ struct SignInView: View {
     @StateObject private var viewModel = SignInEmailViewModel()
     @Binding var showSignInView: Bool
     
-    
     private var darkBrownColor: Color {
         Color("DarkBrownColor")
     }

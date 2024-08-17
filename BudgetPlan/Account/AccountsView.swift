@@ -52,7 +52,7 @@ struct AccountsView: View {
     }
     
     private func loadAccounts() {
-        accountManager.getAllCategories{ accounts, error in
+        accountManager.getAllAccounts{ accounts, error in
             if let accounts = accounts {
                 self.accounts = accounts
             } else if let error = error {

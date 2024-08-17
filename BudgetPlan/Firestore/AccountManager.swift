@@ -12,7 +12,7 @@ class AccountManager {
     private let db = Firestore.firestore()
     private let collectionName = "accounts"
     
-    func getAllCategories(completion: @escaping ([AccountViewModel]?, Error?) -> Void) {
+    func getAllAccounts(completion: @escaping ([AccountViewModel]?, Error?) -> Void) {
         db.collection(collectionName).getDocuments { (querySnapshot, error) in
             if let error = error {
                 completion(nil, error)

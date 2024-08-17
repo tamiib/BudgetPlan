@@ -9,18 +9,6 @@ import SwiftUI
 struct TransactionCardView: View {
     let transaction: TransactionViewModel
     
-    private var dayFormatter: DateFormatter {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "d"
-        return formatter
-    }
-    
-    private var monthFormatter: DateFormatter {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "MMM"
-        return formatter
-    }
-    
     private var amountColor: Color {
         Color("AccentColor")
     }
@@ -28,11 +16,11 @@ struct TransactionCardView: View {
     var body: some View {
         HStack(spacing: 12) {
           
-            VStack(alignment: .leading, spacing: 4) {
-                Text(dayFormatter.string(from: transaction.created))
+            VStack(alignment: .center, spacing: 4) {
+                Text(Helper.dayFormatter(for: transaction.created))
                     .font(.headline)
                     .foregroundColor(.black)
-                Text(monthFormatter.string(from: transaction.created))
+                Text(Helper.monthFormatter(for: transaction.created))
                     .font(.subheadline)
                     .foregroundColor(.black)
             }

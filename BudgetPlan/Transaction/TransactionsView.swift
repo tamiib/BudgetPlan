@@ -7,13 +7,14 @@
 import SwiftUI
 
 struct TransactionsView: View {
-    @StateObject private var viewModel = TransactionViewModel()
+    @State private var viewModel = TransactionViewModel()
     private let transactionManager = TransactionManager()
     @State private var transactions: [TransactionViewModel] = []
     @State private var lastUpdated: Date?
     @State private var selectedTab: Tab = .unsorted
     @State private var selectedTransaction: TransactionViewModel?
     @State private var selectedCategory: CategoryViewModel?
+    @State private var isAddTransactionPresented: Bool = false
    
 
     enum Tab: String, CaseIterable {
@@ -31,7 +32,7 @@ struct TransactionsView: View {
                     HStack {
                         Spacer()
                         if let lastUpdated = lastUpdated {
-                            Text("Last sync: \(timeFormatter.string(from: lastUpdated))")
+                            Text("Last sync: \(Helper.timeFormatter(for: lastUpdated))")
                                 .font(.subheadline)
                                 .foregroundColor(.gray)
                         }
@@ -85,13 +86,13 @@ struct TransactionsView: View {
                             .fontWeight(.bold)
                         Spacer()
                         Button(action: {
-                            refreshTransactions()
+                            loadTransactions()
                         }) {
                             Image(systemName: "arrow.clockwise")
                                 .imageScale(.large)
                         }
                         Button(action: {
-                            addTransaction()
+                            isAddTransactionPresented = true;
                         }) {
                             Image(systemName: "plus")
                                 .imageScale(.medium)
@@ -105,6 +106,11 @@ struct TransactionsView: View {
             }
             .onAppear {
                 loadTransactions()
+            }
+            .sheet(isPresented: $isAddTransactionPresented) {
+                AddTransactionSheet(isPresented: $isAddTransactionPresented, onSave: { newTransaction in
+                    transactions.append(newTransaction)
+                })
             }
             .sheet(item: $selectedTransaction, onDismiss: {
                     selectedTransaction = nil
@@ -137,20 +143,5 @@ struct TransactionsView: View {
         }
     }
 
-    private func refreshTransactions() {
-        print("refresh")
-        loadTransactions()
-    }
-    
-    private func addTransaction() {
-        // Ovdje implementirajte logiku za dodavanje nove transakcije
-        print("Add transaction")
-    }
 }
-
-private let timeFormatter: DateFormatter = {
-    let formatter = DateFormatter()
-    formatter.dateFormat = "HH:mm'h'"
-    return formatter
-}()
 

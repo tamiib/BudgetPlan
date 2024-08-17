@@ -79,6 +79,17 @@ final class TransactionManager {
             }
         }
     }
+    
+    func addNewTransaction(transaction: TransactionViewModel, completion: @escaping (Error?) -> Void) {
+        do {
+            let document = db.collection("transactions").document(transaction.id)
+            try document.setData(from: transaction) { error in
+                completion(error)
+            }
+        } catch let error {
+            completion(error)
+        }
+    }
 }
 
 

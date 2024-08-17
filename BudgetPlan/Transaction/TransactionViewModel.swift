@@ -8,17 +8,17 @@
 import Foundation
 
 
-final class TransactionViewModel: ObservableObject, Identifiable {
+struct TransactionViewModel:  Identifiable, Encodable, Decodable {
     let id: String
-    @Published var amount: Double
-    @Published var description: String
-    @Published var bankAccountName: String
-    @Published var created: Date
-    @Published var categoryName: String
-    @Published var expense: Bool
-    @Published var currency: String
-    @Published var sorted: Bool
-    @Published var categoryIcon: String
+    var amount: Double
+    var description: String
+    var bankAccountName: String
+    var created: Date
+    var categoryName: String
+    var expense: Bool
+    var currency: String
+    var sorted: Bool
+    var categoryIcon: String
 
     init(id: String = UUID().uuidString, amount: Double = 0.0, description: String = "", bankAccountName: String = "", created: Date = Date(), categoryName: String = "", expense: Bool = true, currency: String = "", sorted: Bool = false, categoryIcon: String = "") {
         self.id = id

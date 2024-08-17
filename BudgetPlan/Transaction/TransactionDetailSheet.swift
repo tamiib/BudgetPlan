@@ -7,7 +7,7 @@
 import SwiftUI
 
 struct TransactionDetailSheet: View {
-    let transaction: TransactionViewModel
+    @State  var transaction: TransactionViewModel
     @Binding var selectedCategory: CategoryViewModel?
     @Environment(\.presentationMode) var presentationMode
     private let transactionManager = TransactionManager()
@@ -69,7 +69,7 @@ struct TransactionDetailSheet: View {
 
 
                         Button(action: {
-                            if let selectedCategory = selectedCategory {
+                            if var selectedCategory = selectedCategory {
                                 updateBudgetForCategory(selectedCategory, transactionAmount: transaction.amount) { success in
                                     if success {
                                         transaction.categoryName = selectedCategory.name
@@ -109,7 +109,6 @@ struct TransactionDetailSheet: View {
             })
             .onPreferenceChange(HeightPreferenceKey.self) { height in
                 if height > geometry.size.height * 0.75 {
-//                    ovo prikazuje ScrollView ako content prelzi vise od 75 posto visine ekrana
                 }
             }
         }

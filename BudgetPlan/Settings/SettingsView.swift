@@ -20,9 +20,7 @@ struct SettingsView: View {
             
             Spacer()
             
-            // Log out button
             Button(action: {
-                // Log out action
                 showSignInView = true
             }) {
                 Text("Log out")

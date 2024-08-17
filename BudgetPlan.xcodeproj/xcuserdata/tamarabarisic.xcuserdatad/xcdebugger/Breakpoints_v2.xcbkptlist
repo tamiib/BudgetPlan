@@ -196,17 +196,17 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "FEDE3328-4C2B-446C-A802-B9885A286F4D"
+            uuid = "2661CD78-9D2B-4D05-B23C-C6172F05091B"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "BudgetPlan/Budget/BudgetsView.swift"
+            filePath = "BudgetPlan/Transaction/AddTransactionSheet.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "58"
-            endingLineNumber = "58"
-            landmarkName = "body"
-            landmarkType = "24">
+            startingLineNumber = "88"
+            endingLineNumber = "88"
+            landmarkName = "saveTransaction()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
