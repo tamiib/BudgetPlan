@@ -24,6 +24,7 @@
 		0E3524AA2C6D70CF006DA545 /* AddTransactionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3524A92C6D70CF006DA545 /* AddTransactionSheet.swift */; };
 		0E3524AD2C713FEC006DA545 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3524AC2C713FEC006DA545 /* Helper.swift */; };
 		0E3524AF2C714386006DA545 /* BudgetFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3524AE2C714386006DA545 /* BudgetFormView.swift */; };
+		0E3524B12C715573006DA545 /* AddCategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3524B02C715573006DA545 /* AddCategoryView.swift */; };
 		0E7BDD1F2C08C1630030666F /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E7BDD1E2C08C1630030666F /* SignInView.swift */; };
 		0E7BDD212C08C3FB0030666F /* AuthenticationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E7BDD202C08C3FB0030666F /* AuthenticationManager.swift */; };
 		0E7BDD232C08D81D0030666F /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E7BDD222C08D81D0030666F /* RootView.swift */; };
@@ -63,6 +64,7 @@
 		0E3524A92C6D70CF006DA545 /* AddTransactionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransactionSheet.swift; sourceTree = "<group>"; };
 		0E3524AC2C713FEC006DA545 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		0E3524AE2C714386006DA545 /* BudgetFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetFormView.swift; sourceTree = "<group>"; };
+		0E3524B02C715573006DA545 /* AddCategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCategoryView.swift; sourceTree = "<group>"; };
 		0E7BDD1E2C08C1630030666F /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
 		0E7BDD202C08C3FB0030666F /* AuthenticationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationManager.swift; sourceTree = "<group>"; };
 		0E7BDD222C08D81D0030666F /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
@@ -248,6 +250,7 @@
 				0EFB36022C64087700660128 /* CategoryViewModel.swift */,
 				0EFB35FF2C6403E800660128 /* FlowLayout.swift */,
 				0EFB360F2C66320200660128 /* CategoryView.swift */,
+				0E3524B02C715573006DA545 /* AddCategoryView.swift */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -339,6 +342,7 @@
 				0EFB36002C6403E800660128 /* FlowLayout.swift in Sources */,
 				0EFB35FD2C61316A00660128 /* TransactionDetailSheet.swift in Sources */,
 				0EFB360A2C65496200660128 /* BudgetViewModel.swift in Sources */,
+				0E3524B12C715573006DA545 /* AddCategoryView.swift in Sources */,
 				0E7BDD2D2C28AE810030666F /* ProfileView.swift in Sources */,
 				0E2FCDC42C347E03006F5FB8 /* TransactionsView.swift in Sources */,
 				0E3524AA2C6D70CF006DA545 /* AddTransactionSheet.swift in Sources */,

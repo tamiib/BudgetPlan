@@ -89,7 +89,7 @@ struct BudgetsView: View {
                         } else {
                             budgets.append(savedBudget)
                         }
-                        loadCategories()
+                        loadCategories() 
                     }
                 )
             }

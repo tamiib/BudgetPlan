@@ -8,13 +8,11 @@
 import Foundation
 import FirebaseFirestoreSwift
 
-import Foundation
-import FirebaseFirestoreSwift
 
-struct BudgetsViewModel: Identifiable, Equatable, Codable {
+struct BudgetsViewModel: Identifiable, Equatable, Codable, Hashable {
     var id: String
     let name: String
-    let categoryIds: [String]
+    var categoryIds: [String]
     let amount: Double
     var leftAmount: Double
     let expense: Bool

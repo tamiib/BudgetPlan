@@ -31,13 +31,13 @@ class CategoryManager {
         }
     }
 
-    func addCategory(_ category: CategoryViewModel, completion: @escaping (Error?) -> Void) {
-        let data: [String: Any] = [
-            "name": category.name,
-            "icon": category.icon
-        ]
-
-        db.collection("categories").addDocument(data: data) { error in
+    func addCategory(category: CategoryViewModel, completion: @escaping (Error?) -> Void) {
+        do {
+            let document = db.collection("categories").document(category.id)
+            try document.setData(from: category) { error in
+                completion(error)
+            }
+        } catch let error {
             completion(error)
         }
     }
