@@ -10,7 +10,7 @@ struct AddTransactionSheet: View {
     @Binding var isPresented: Bool
     @State private var amount: String = ""
     @State private var description: String = ""
-    @State private var selectedBankAccountName: String = ""
+    @State private var selectedBankAccountName: String = "None" // Defaultna vrijednost
     @State private var created: Date = Date()
     @State private var isExpense: Bool = true
     @State private var currency: String = Helper.getCurrencies().first ?? "USD"
@@ -36,8 +36,9 @@ struct AddTransactionSheet: View {
                             .keyboardType(.decimalPad)
                         TextField("Description", text: $description)
                         Picker("Account", selection: $selectedBankAccountName) {
-                            ForEach(bankAccounts, id: \.self) {
-                                Text($0)
+                            Text("None").tag("None") // Omogućuje opciju "None"
+                            ForEach(bankAccounts, id: \.self) { account in
+                                Text(account).tag(account)
                             }
                         }
                         DatePicker("Date", selection: $created, displayedComponents: .date)
@@ -69,7 +70,7 @@ struct AddTransactionSheet: View {
                         .cornerRadius(8)
                 }
                 .padding()
-                .disabled(amount.isEmpty || description.isEmpty || selectedBankAccountName.isEmpty)
+                .disabled(amount.isEmpty || description.isEmpty)
             }
             .navigationBarTitle("Add Transaction", displayMode: .inline)
             .navigationBarItems(leading: Button("Cancel") {
@@ -96,13 +97,14 @@ struct AddTransactionSheet: View {
         var newTransaction = TransactionViewModel(
             amount: amountValue,
             description: description,
-            bankAccountName: selectedBankAccountName,
+            bankAccountName: selectedBankAccountName == "None" ? "" : selectedBankAccountName,
             created: created,
             categoryName: "",
             expense: isExpense,
             currency: currencySymbol,
             sorted: false,
             categoryIcon: ""
+            
         )
         
         transactionManager.addNewTransaction(transaction: newTransaction) { error in
@@ -158,6 +160,10 @@ struct AddTransactionSheet: View {
                 print("Error fetching bank accounts: \(error.localizedDescription)")
             } else {
                 self.bankAccounts = accounts?.map { $0.accountName } ?? []
+                // Ako postoji barem jedan bankovni račun, postavite prvi kao odabrani
+                if let firstAccount = bankAccounts.first {
+                    selectedBankAccountName = firstAccount
+                }
             }
         }
     }

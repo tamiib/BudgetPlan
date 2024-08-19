@@ -11,6 +11,7 @@ import FirebaseAuth
 
 final class TransactionManager {
     private var db = Firestore.firestore()
+    private let transactionCollection = "transactions"
 
     func getTransactionsForUser(completion: @escaping ([TransactionViewModel]) -> Void) {
         guard let userID = Auth.auth().currentUser?.uid else {
@@ -19,7 +20,7 @@ final class TransactionManager {
             return
         }
 
-        db.collection("transactions")
+        db.collection(transactionCollection)
             .whereField("userId", isEqualTo: userID)
             .getDocuments { (querySnapshot, error) in
                 if let error = error {
@@ -73,7 +74,7 @@ final class TransactionManager {
                     "categoryIcon": transaction.categoryIcon
                 ]
 
-                db.collection("transactions").document(transaction.id).updateData(transactionData) { error in
+                db.collection(transactionCollection).document(transaction.id).updateData(transactionData) { error in
                     completion(error)
                 }
             }
@@ -82,7 +83,7 @@ final class TransactionManager {
     
     func addNewTransaction(transaction: TransactionViewModel, completion: @escaping (Error?) -> Void) {
         do {
-            let document = db.collection("transactions").document(transaction.id)
+            let document = db.collection(transactionCollection).document(transaction.id)
             try document.setData(from: transaction) { error in
                 completion(error)
             }

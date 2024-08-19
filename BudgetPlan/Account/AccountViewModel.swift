@@ -6,17 +6,20 @@
 //
 
 import Foundation
+import FirebaseAuth
 
 struct AccountViewModel: Identifiable, Equatable {
-    let id: String
-    let accountName: String
-    let accountNumber: String
-    let group: Bool
+    var id: String
+    var accountName: String
+    var accountNumber: String
+    var group: Bool
+    var userId: String
 
     init(id: String = UUID().uuidString, accountName: String, accountNumber: String, group: Bool) {
         self.id = id
         self.accountName = accountName
         self.accountNumber = accountNumber
         self.group = group
+        self.userId = Auth.auth().currentUser?.uid ?? ""
     }
 }

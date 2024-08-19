@@ -19,6 +19,7 @@ struct DBUser{
 final class UserManager{
     
     static let shared = UserManager()
+    private let userCollection = "users"
     
     private init (){}
     
@@ -37,11 +38,11 @@ final class UserManager{
         if let photoUrl = auth.photoUrl{
             userData["photoUrl"] = photoUrl
         }
-         try await Firestore.firestore().collection("users").document(auth.uid).setData(userData,merge: false)
+         try await Firestore.firestore().collection(userCollection).document(auth.uid).setData(userData,merge: false)
     }
     
     func getUser (userId : String) async throws -> DBUser {
-        let snapshot = try await Firestore.firestore().collection("users").document(userId).getDocument()
+        let snapshot = try await Firestore.firestore().collection(userCollection).document(userId).getDocument()
         guard let data = snapshot.data(), let userId = data["id"] as? String, let email = data["email"] as? String else{
             throw URLError(.badServerResponse)
         }

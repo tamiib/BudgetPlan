@@ -6,7 +6,7 @@
 //
 
 import Foundation
-
+import FirebaseAuth
 
 struct TransactionViewModel:  Identifiable, Encodable, Decodable {
     let id: String
@@ -19,6 +19,7 @@ struct TransactionViewModel:  Identifiable, Encodable, Decodable {
     var currency: String
     var sorted: Bool
     var categoryIcon: String
+    var userId : String
 
     init(id: String = UUID().uuidString, amount: Double = 0.0, description: String = "", bankAccountName: String = "", created: Date = Date(), categoryName: String = "", expense: Bool = true, currency: String = "", sorted: Bool = false, categoryIcon: String = "") {
         self.id = id
@@ -31,6 +32,7 @@ struct TransactionViewModel:  Identifiable, Encodable, Decodable {
         self.currency = currency
         self.sorted = sorted
         self.categoryIcon = categoryIcon
+        self.userId = Auth.auth().currentUser?.uid ?? ""
     }
 }
 

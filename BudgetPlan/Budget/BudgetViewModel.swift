@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import FirebaseFirestoreSwift
+import FirebaseAuth
 
 
 struct BudgetsViewModel: Identifiable, Equatable, Codable, Hashable {
@@ -18,6 +18,7 @@ struct BudgetsViewModel: Identifiable, Equatable, Codable, Hashable {
     let expense: Bool
     let currency: String
     let icon: String
+    var userId: String
 
     var idString: String {
         return id
@@ -32,6 +33,7 @@ struct BudgetsViewModel: Identifiable, Equatable, Codable, Hashable {
         self.expense = expense
         self.currency = currency
         self.icon = icon
+        self.userId = Auth.auth().currentUser?.uid ?? ""
     }
 }
 
