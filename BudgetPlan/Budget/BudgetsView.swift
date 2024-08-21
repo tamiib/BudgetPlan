@@ -14,7 +14,8 @@ struct BudgetsView: View {
     @State private var budgetManager = BudgetManager()
     @State private var categoryManager = CategoryManager()
     @State private var currentExpense: Bool = true
-    @State private var editingBudget: BudgetsViewModel? = nil
+    @State private var selectedBudget: BudgetsViewModel? = nil
+    @State private var isNewBudget: Bool = false
 
     var body: some View {
         NavigationView {
@@ -40,12 +41,12 @@ struct BudgetsView: View {
                                     .padding(.vertical, 5)
                                     .onTapGesture {
                                         print("Selected budget: \(budget.name)")
-                                        editingBudget = budget
+                                        selectedBudget = budget
+                                        isNewBudget = false
                                     }
                             }
                         }
                     }
-                    
                 }
             }
             .navigationBarTitleDisplayMode(.inline)
@@ -58,9 +59,8 @@ struct BudgetsView: View {
                         Spacer()
                         
                         Button(action: {
-                            let newBudget = BudgetsViewModel(id: UUID().uuidString, name: "", categoryIds: [], amount: 0, leftAmount: 0, expense: currentExpense, currency: "", icon: "")
-                            print("Creating new budget")
-                            editingBudget = newBudget
+                            selectedBudget = BudgetsViewModel(id: UUID().uuidString, name: "", categoryIds: [], amount: 0, leftAmount: 0, expense: currentExpense, currency: "", icon: "")
+                            isNewBudget = true
                         }) {
                             Image(systemName: "plus")
                                 .imageScale(.medium)
@@ -76,20 +76,19 @@ struct BudgetsView: View {
                 loadBudgets()
                 loadCategories()
             }
-            .sheet(item: $editingBudget, onDismiss: {
-                print("Dismissed sheet")
-                editingBudget = nil
+            .sheet(item: $selectedBudget, onDismiss: {
+                isNewBudget = false
             }) { budget in
                 BudgetFormView(
                     budget: budget,
-                    categories: getValidCategories(forExistingBudget: budget.id != ""),
+                    isNewBudget: isNewBudget,
                     onSave: { savedBudget in
                         if let index = budgets.firstIndex(where: { $0.id == savedBudget.id }) {
                             budgets[index] = savedBudget
                         } else {
                             budgets.append(savedBudget)
                         }
-                        loadCategories() 
+                        loadCategories()
                     }
                 )
             }
@@ -122,8 +121,8 @@ struct BudgetsView: View {
     
     private func getValidCategories(forExistingBudget: Bool) -> [CategoryViewModel] {
         if forExistingBudget {
-            print("Fetching valid categories for existing budget with ID: \(editingBudget?.id ?? "nil")")
-            let assignedCategories = categories.filter { editingBudget?.categoryIds.contains($0.id) ?? false }
+            print("Fetching valid categories for existing budget with ID: \(selectedBudget?.id ?? "nil")")
+            let assignedCategories = categories.filter { selectedBudget?.categoryIds.contains($0.id) ?? false }
             let unassignedCategories = categories.filter { $0.budgetId == nil || $0.budgetId?.isEmpty == true }
             print("Assigned categories: \(assignedCategories.map { $0.name })")
             print("Unassigned categories: \(unassignedCategories.map { $0.name })")
@@ -136,5 +135,4 @@ struct BudgetsView: View {
         }
     }
 }
-
 

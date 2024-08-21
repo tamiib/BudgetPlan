@@ -10,6 +10,8 @@ struct BudgetFormView: View {
     @Environment(\.presentationMode) var presentationMode
     @State private var name: String = ""
     @State private var icon: String = ""
+    @State private var amountText: String = ""
+    @State private var leftAmountText: String = ""
     @State private var amount: Double = 0.0
     @State private var leftAmount: Double = 0.0
     @State private var selectedCategoryIds: Set<String> = []
@@ -20,14 +22,15 @@ struct BudgetFormView: View {
     private let budgetManager = BudgetManager()
     
     var onSave: (BudgetsViewModel) -> Void
-    var categories: [CategoryViewModel]
+    var isNewBudget: Bool
     
     @State private var budget: BudgetsViewModel?
+    @State private var categories: [CategoryViewModel] = []
 
-    init(budget: BudgetsViewModel?, categories: [CategoryViewModel], onSave: @escaping (BudgetsViewModel) -> Void) {
+    init(budget: BudgetsViewModel?, isNewBudget: Bool, onSave: @escaping (BudgetsViewModel) -> Void) {
         self._expense = State(initialValue: budget?.expense ?? true)
         self._budget = State(initialValue: budget)
-        self.categories = categories
+        self.isNewBudget = isNewBudget
         self.onSave = onSave
         
         if let budget = budget {
@@ -36,6 +39,8 @@ struct BudgetFormView: View {
             _amount = State(initialValue: budget.amount)
             _leftAmount = State(initialValue: budget.leftAmount)
             _selectedCategoryIds = State(initialValue: Set(budget.categoryIds))
+            _amountText = State(initialValue: String(budget.amount))
+            _leftAmountText = State(initialValue: String(budget.leftAmount))
         }
     }
 
@@ -57,12 +62,11 @@ struct BudgetFormView: View {
                     }
                     
                     Section(header: Text("Amounts")) {
-                        
                         VStack(alignment: .leading) {
                             Text("Amount")
                                 .foregroundColor(.gray)
                                 .padding(.bottom, 0)
-                            TextField("Enter amount", value: $amount, formatter: NumberFormatter())
+                            TextField("Enter amount", text: $amountText)
                                 .keyboardType(.decimalPad)
                         }
                         
@@ -70,7 +74,7 @@ struct BudgetFormView: View {
                             Text("Left Amount")
                                 .foregroundColor(.gray)
                                 .padding(.bottom, 0)
-                            TextField("Left Amount", value: $leftAmount, formatter: NumberFormatter())
+                            TextField("Left Amount", text: $leftAmountText)
                                 .keyboardType(.decimalPad)
                         }
                     }
@@ -100,11 +104,11 @@ struct BudgetFormView: View {
                     }
                 }
             }
-            .navigationBarTitle(budget == nil ? "New Budget" : "Edit Budget", displayMode: .inline)
+            .navigationBarTitle(isNewBudget ? "New Budget" : "Edit Budget", displayMode: .inline)
             .navigationBarItems(leading: Button("Cancel") {
                 presentationMode.wrappedValue.dismiss()
             }, trailing: Button("Save") {
-                saveBudget()
+                validateAndSaveBudget()
             })
             .alert(isPresented: $showAlert) {
                 Alert(
@@ -113,9 +117,47 @@ struct BudgetFormView: View {
                     dismissButton: .default(Text("OK"))
                 )
             }
+            .onAppear {
+                loadCategories()
+            }
         }
     }
     
+    private func loadCategories() {
+        categoryManager.getAllCategories { categories, error in
+            if let categories = categories {
+                if isNewBudget {
+                    self.categories = categories.filter { $0.budgetId == nil || $0.budgetId?.isEmpty == true }
+                } else {
+                    let budgetCategories = categories.filter { $0.budgetId == budget?.id }
+                    let unassignedCategories = categories.filter { $0.budgetId == nil || $0.budgetId?.isEmpty == true }
+                    self.categories = budgetCategories + unassignedCategories
+                }
+            } else if let error = error {
+                print("Error fetching categories: \(error.localizedDescription)")
+            }
+        }
+    }
+
+    private func validateAndSaveBudget() {
+        guard let amountValue = Double(amountText), let leftAmountValue = Double(leftAmountText) else {
+            alertMessage = "Please enter a valid number for Amount and Left Amount."
+            showAlert = true
+            return
+        }
+        
+        if leftAmountValue > amountValue {
+            alertMessage = "The left amount cannot be greater than the total amount."
+            showAlert = true
+            return
+        }
+        
+        self.amount = amountValue
+        self.leftAmount = leftAmountValue
+
+        saveBudget()
+    }
+
     private func saveBudget() {
         let budgetId = budget?.id ?? UUID().uuidString
         
@@ -167,7 +209,7 @@ struct BudgetFormView: View {
                 showAlert = true
                 presentationMode.wrappedValue.dismiss()
             } else {
-                if budget != nil {
+                if budget != nil && !isNewBudget {
                     budgetManager.updateBudget(budget: newBudget) { error in
                         if let error = error {
                             print("Error updating budget: \(error.localizedDescription)")
@@ -204,4 +246,3 @@ struct BudgetFormView: View {
         }
     }
 }
-
