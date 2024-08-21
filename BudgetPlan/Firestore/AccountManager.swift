@@ -68,6 +68,26 @@ class AccountManager {
         }
     }
     
+    func updateAccount(_ account: AccountViewModel, completion: @escaping (Error?) -> Void) {
+        checkUserAuthentication { userID in
+            guard let _ = userID else {
+                completion(NSError(domain: "", code: 401, userInfo: [NSLocalizedDescriptionKey: "No authenticated user"]))
+                return
+            }
+            
+            let data: [String: Any] = [
+                "accountName": account.accountName,
+                "accountNumber": account.accountNumber,
+                "group": account.group
+            ]
+
+            self.db.collection(self.collectionName).document(account.id).updateData(data) { error in
+                completion(error)
+            }
+        }
+    }
+
+    
     func deleteAccount(_ accountId: String, completion: @escaping (Result<Void, Error>) -> Void) {
         checkUserAuthentication { userID in
             guard let _ = userID else {

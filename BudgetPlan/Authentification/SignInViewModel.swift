@@ -6,44 +6,51 @@
 //
 
 import Foundation
+import FirebaseAuth
 
-@MainActor
-final class SignInEmailViewModel: ObservableObject{
-    @Published var email = ""
-    @Published var password = ""
-    @Published var isSignedIn = false
-    @Published var showSignUpView = false
-    @Published var errorMessage: String? = nil
-        
-    
-    func signUp() async throws{
-        guard !email.isEmpty, !password.isEmpty else {
-            print("No email or password found.")
-            errorMessage = "Please enter both email and password."
-            return
+class SignInEmailViewModel: ObservableObject {
+    @Published var email: String = ""
+    @Published var password: String = ""
+    @Published var errorMessage: String?
+
+    func signIn() async throws -> Bool {
+      
+        DispatchQueue.main.async {
+            self.errorMessage = nil
         }
+        
+        guard validateInput() else {
+            return false
+        }
+        
         do {
-               try await AuthenticationManager.shared.createUser(email: email, password: password)
-               errorMessage = nil
-           } catch {
-               errorMessage = "Sign up failed. Please try again."
-               throw error
-           }
+            let authResult = try await Auth.auth().signIn(withEmail: email, password: password)
+            print("User signed in successfully: \(authResult.user.uid)")
+            return true
+        } catch {
+            DispatchQueue.main.async {
+                self.errorMessage = error.localizedDescription
+            }
+            return false
+        }
     }
     
-    func signIn() async throws {
-            guard !email.isEmpty, !password.isEmpty else {
-                print("No email or password found.")
-                errorMessage = "Please enter both email and password."
-                return
+    private func validateInput() -> Bool {
+        guard !email.isEmpty else {
+            DispatchQueue.main.async {
+                self.errorMessage = "Email cannot be empty."
             }
-            do {
-                try await AuthenticationManager.shared.signInUser(email: email, password: password)
-                self.isSignedIn = true
-                errorMessage = nil
-            } catch {
-                errorMessage = "Invalid email or password. Please try again."
-                throw error
-            }
+            return false
         }
+        
+        guard !password.isEmpty else {
+            DispatchQueue.main.async {
+                self.errorMessage = "Password cannot be empty."
+            }
+            return false
+        }
+        
+        return true
+    }
 }
+
