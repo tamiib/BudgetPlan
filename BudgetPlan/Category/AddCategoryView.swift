@@ -16,13 +16,35 @@ struct AddCategoryView: View {
 
     var budgets: [BudgetsViewModel]
     var onSave: (CategoryViewModel) -> Void
-    
 
     private let categoryManager = CategoryManager()
     private let budgetManager = BudgetManager()
 
     var body: some View {
         VStack {
+            HStack {
+                Button(action: {
+                    presentationMode.wrappedValue.dismiss()
+                }) {
+                    
+                        Image(systemName: "arrow.backward")
+                        .foregroundColor(Color("AccentColor"))
+                        Text("Back")
+                            .font(.headline)
+                    .foregroundColor(Color("AccentColor"))
+                }
+
+                Spacer()
+            }
+            .padding(.top, 20)
+            .padding(.horizontal)
+            
+            Text("Add Category")
+            
+                .fontWeight(.bold)
+                .frame(maxWidth: .infinity, alignment: .center)
+                .padding(.bottom, 10)
+
             Form {
                 Section(header: Text("Category Details")) {
                     TextField("Category Name", text: $categoryName)
@@ -39,41 +61,23 @@ struct AddCategoryView: View {
                 }
             }
 
-            Spacer()
-
-            HStack {
-                Button(action: {
-                   
-                }) {
-                    Text("Cancel")
-                        .font(.headline)
-                        .padding(.vertical, 10)
-                        .padding(.horizontal, 30)
-                        .background(Color.gray)
-                        .foregroundColor(.white)
-                        .cornerRadius(8)
-                }
-
-                Spacer()
-
-                Button(action: saveCategory) {
-                    Text("Save")
-                        .font(.headline)
-                        .padding(.vertical, 10)
-                        .padding(.horizontal, 30)
-                        .background(Color("AccentColor"))
-                        .foregroundColor(.white)
-                        .cornerRadius(8)
-                }
-                .disabled(categoryName.isEmpty || categoryIcon.isEmpty)
+            Button(action: saveCategory) {
+                Text("Save")
+                    .font(.headline)
+                    .foregroundColor(.white)
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color("AccentColor"))
+                    .cornerRadius(8)
             }
+            .disabled(categoryName.isEmpty || categoryIcon.isEmpty)
+            .opacity(categoryName.isEmpty || categoryIcon.isEmpty ? 0.5 : 1.0)
             .padding(.horizontal, 20)
-            .padding(.bottom, 20)
+            .padding(.top, 10)
+
+            Spacer()
         }
-        .navigationBarTitle("Add Category", displayMode: .inline)
-        .navigationBarItems(leading: Button("Cancel") {
-            presentationMode.wrappedValue.dismiss()
-        })
+        
         .alert(isPresented: $showAlert) {
             Alert(title: Text("Error"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
         }
@@ -119,5 +123,4 @@ struct AddCategoryView: View {
             }
         }
     }
-
 }

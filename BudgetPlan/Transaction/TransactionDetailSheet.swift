@@ -18,103 +18,67 @@ struct TransactionDetailSheet: View {
     var body: some View {
         GeometryReader { geometry in
             VStack {
-                VStack(spacing: 20) {
-                    HStack {
-                        Button(action: {
-                            presentationMode.wrappedValue.dismiss()
-                        }) {
-                            HStack {
-                                Image(systemName: "arrow.backward")
-                                Text("Back")
-                                    .font(.headline)
-                            }
-                        }
-                        Spacer()
-                        Button(action: {
-                            presentationMode.wrappedValue.dismiss()
-                        }) {
-                            Image(systemName: "xmark")
+                HStack {
+                    Button(action: {
+                        presentationMode.wrappedValue.dismiss()
+                    }) {
+                        HStack {
+                            Image(systemName: "arrow.backward")
+                            Text("Back")
                                 .font(.headline)
-                                .padding()
-                                .background(Color(UIColor.lightGray))
-                                .clipShape(Circle())
-                                .foregroundColor(.white)
                         }
                     }
+                    Spacer()
+                }
+                .padding(.horizontal)
+                .padding(.top, 15)
+
+                TransactionCardView(transaction: transaction, backgroundColorName: "BackgroundColor")
                     .padding(.horizontal)
 
-                    TransactionCardView(transaction: transaction)
+                Text("Select category")
+                    .font(.headline)
+                    .bold()
+                    .padding(.top, 20)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal)
 
-                    Text("Select category")
-                        .font(.headline)
-                        .bold()
-                        .padding(.top, 20)
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                FlowLayout(categories: categories, selectedCategory: $selectedCategory, backgroundColorName: "BackgroundColor")
+                    .padding(.horizontal)
 
-                    FlowLayout(categories: categories, selectedCategory: $selectedCategory)
-
-                    HStack {
-                        Button(action: {
-                         
-                        }) {
-                            Text("Skip")
-                                .font(.headline)
-                                .padding()
-                                .background(Color.gray)
-                                .foregroundColor(.white)
-                                .cornerRadius(10)
-                        }
-
-                        Spacer()
-
-
-                        Button(action: {
-                            if var selectedCategory = selectedCategory {
-                                updateBudgetForCategory(selectedCategory, transactionAmount: transaction.amount) { success in
+                Spacer() 
+                
+                Button(action: {
+                    if let selectedCategory = selectedCategory {
+                        updateBudgetForCategory(selectedCategory, transactionAmount: transaction.amount) { success in
+                            if success {
+                                transaction.categoryName = selectedCategory.name
+                                transaction.categoryIcon = selectedCategory.icon
+                                transaction.sorted = true
+                                updateTransaction(transaction) { success in
                                     if success {
-                                        transaction.categoryName = selectedCategory.name
-                                        transaction.categoryIcon = selectedCategory.icon
-                                        transaction.sorted = true
-                                        updateTransaction(transaction) { success in
-                                            if success {
-                                                presentationMode.wrappedValue.dismiss()
-                                            }
-                                        }
+                                        presentationMode.wrappedValue.dismiss()
                                     }
                                 }
                             }
-                        }) {
-                            Text("Set Category")
-                                .font(.headline)
-                                .padding()
-                                .background(selectedCategory != nil ? Color("DarkBrownColor"): Color.gray)
-                                .foregroundColor(.white)
-                                .cornerRadius(10)
                         }
-                        .disabled(selectedCategory == nil)
                     }
-                    .padding(.top, 20)
+                }) {
+                    Text("Set Category")
+                        .font(.headline)
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .background(Color("AccentColor").opacity(selectedCategory != nil ? 1.0 : 0.5))
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                        .padding(.horizontal)
                 }
-                .padding()
-                .background(GeometryReader { innerGeometry in
-                    Color.clear
-                        .preference(key: HeightPreferenceKey.self, value: innerGeometry.size.height)
-                })
+                .disabled(selectedCategory == nil)
+                .padding(.bottom, 20)
             }
-            .frame(maxHeight: .infinity, alignment: .top)
-            .background(ScrollView {
-                VStack {
-                    Spacer(minLength: 0)
-                }
-            })
-            .onPreferenceChange(HeightPreferenceKey.self) { height in
-                if height > geometry.size.height * 0.75 {
-                }
+            .onAppear(){
+                fetchCategories()
             }
-        }
-        .frame(maxHeight: .infinity, alignment: .top)
-        .onAppear(){
-            fetchCategories()
         }
     }
     
@@ -179,10 +143,4 @@ struct TransactionDetailSheet: View {
     }
 }
 
-struct HeightPreferenceKey: PreferenceKey {
-    typealias Value = CGFloat
-    static var defaultValue: CGFloat = 0
-    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
-        value = nextValue()
-    }
-}
+

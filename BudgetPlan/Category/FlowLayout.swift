@@ -3,6 +3,7 @@ import SwiftUI
 struct FlowLayout: View {
     var categories: [CategoryViewModel]
     @Binding var selectedCategory: CategoryViewModel?
+    var backgroundColorName: String
     var spacing: CGFloat = 8
 
     @State private var totalHeight = CGFloat.zero
@@ -55,7 +56,7 @@ struct FlowLayout: View {
             Text(category.name)
         }
         .padding()
-        .background(Color("CategoryBg"))
+        .background(Color(backgroundColorName))
         .cornerRadius(10)
         .overlay(
             RoundedRectangle(cornerRadius: 10)
@@ -75,3 +76,4 @@ struct FlowLayout: View {
         }
     }
 }
+

@@ -32,7 +32,7 @@ struct BudgetCardView: View {
                             .cornerRadius(10)
 
                         Rectangle()
-                            .frame(width: min(CGFloat(self.budget.leftAmount / self.budget.amount) * geometry.size.width, geometry.size.width), height: 10)
+                            .frame(width: self.widthForBudget(geometryWidth: geometry.size.width), height: 10)
                             .foregroundColor(Color("AccentColor"))
                             .cornerRadius(10)
                     }
@@ -60,6 +60,15 @@ struct BudgetCardView: View {
         .background(Color.white)
         .cornerRadius(10)
         .shadow(radius: 5)
+    }
+    
+    private func widthForBudget(geometryWidth: CGFloat) -> CGFloat {
+        guard budget.amount > 0 else {
+            return 0
+        }
+        
+        let ratio = budget.leftAmount / budget.amount
+        return max(min(CGFloat(ratio) * geometryWidth, geometryWidth), 0) 
     }
 }
 

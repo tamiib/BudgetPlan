@@ -8,6 +8,7 @@ import SwiftUI
 
 struct TransactionCardView: View {
     let transaction: TransactionViewModel
+    let backgroundColorName: String
     
     private var amountColor: Color {
         Color("AccentColor")
@@ -78,7 +79,7 @@ struct TransactionCardView: View {
         }
         .frame(height: 86)
         .padding()
-        .background(Color.white)
+        .background(Color(backgroundColorName))
         .cornerRadius(10)
     }
 }

@@ -18,71 +18,58 @@ struct CategoryView: View {
     private let budgetManager = BudgetManager()
 
     var body: some View {
-        NavigationView {
-            ZStack {
-                Color("BackgroundColor")
-                    .edgesIgnoringSafeArea(.all)
+        VStack(alignment: .leading, spacing: 10) {
+            HStack {
+                Text("Categories")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                Spacer()
+                Button(action: {
+                    isAddCategoryPresented = true
+                }) {
+                    Image(systemName: "plus")
+                        .imageScale(.medium)
+                        .padding(5)
+                        .background(Color("AccentColor"))
+                        .clipShape(Circle())
+                        .foregroundColor(.white)
+                }
+            }
+            .padding(.top, 20)
+            .padding(.horizontal)
 
-                VStack(alignment: .leading, spacing: 10) {
-                    // Picker za odabir budžeta
-                    Picker("Select Budget", selection: $selectedBudgetId) {
-                        Text("All Categories").tag("All")
-                        Text("No Budget").tag("NoBudget")
-                        ForEach(filteredBudgets, id: \.id) { budget in
-                            Text(budget.name)
-                                .foregroundColor(.black) // Tekst u crnoj boji
-                                .tag(budget.id)
-                        }
-                    }
-                    .pickerStyle(MenuPickerStyle())
+           
+            Picker("Select Budget", selection: $selectedBudgetId) {
+                Text("All Categories").tag("All")
+                Text("No Budget").tag("NoBudget")
+                ForEach(filteredBudgets, id: \.id) { budget in
+                    Text(budget.name)
+                        .foregroundColor(.black) 
+                        .tag(budget.id)
+                }
+            }
+            .pickerStyle(MenuPickerStyle())
+            .padding(.horizontal, 16)
+            .background(Color("LightBrown"))
+            .cornerRadius(10)
+            .padding(.bottom, 8)
+            .padding(.top, 10)
+
+            ScrollView {
+                FlowLayout(categories: filteredCategories, selectedCategory: $selectedCategory, backgroundColorName: "White")
                     .padding(.horizontal, 16)
-                    .padding(.vertical, 8)
-                    .background(Color("LightBrown"))
-                    .cornerRadius(10)
-                    .padding(.bottom, 8)
-
-                    // Prikaz kategorija
-                    ScrollView {
-                        FlowLayout(categories: filteredCategories, selectedCategory: $selectedCategory)
-                            .padding(.horizontal, 16)
-                    }
-                    Spacer()
-                }
             }
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .principal) {
-                    HStack {
-                        Text("Categories")
-                            .font(.largeTitle)
-                            .fontWeight(.bold)
-                        Spacer()
-
-                        Button(action: {
-                            isAddCategoryPresented = true
-                        }) {
-                            Image(systemName: "plus")
-                                .imageScale(.medium)
-                                .padding(5)
-                                .background(Color("AccentColor"))
-                                .clipShape(Circle())
-                                .foregroundColor(.white)
-                        }
-                    }
-                    .padding(.top, 50)
-                }
-            }
-            .onAppear {
-                fetchBudgetsAndCategories()
-            }
-            .sheet(isPresented: $isAddCategoryPresented) {
-                AddCategoryView(budgets: budgets, onSave: { newCategory in
-                    categories.append(newCategory)
-                    isAddCategoryPresented = false
-                })
-            }
-//            .presentationDetents([.height(400)])
-//            .presentationDragIndicator(.visible)
+            Spacer()
+        }
+        .background(Color("BackgroundColor").edgesIgnoringSafeArea(.all))
+        .onAppear {
+            fetchBudgetsAndCategories()
+        }
+        .sheet(isPresented: $isAddCategoryPresented) {
+            AddCategoryView(budgets: budgets, onSave: { newCategory in
+                categories.append(newCategory)
+                isAddCategoryPresented = false
+            })
         }
     }
 
@@ -115,8 +102,7 @@ struct CategoryView: View {
             } else {
                 guard let budgets = budgets else { return }
                 self.budgets = budgets
-                
-                // Filter budžete koji imaju pridružene kategorije
+            
                 self.filteredBudgets = budgets.filter { budget in
                     categories.contains { $0.budgetId == budget.id }
                 }
@@ -124,4 +110,5 @@ struct CategoryView: View {
         }
     }
 }
+
 

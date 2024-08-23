@@ -50,66 +50,84 @@ struct BudgetFormView: View {
                 Color("BackgroundColor")
                     .edgesIgnoringSafeArea(.all)
                 
-                Form {
-                    Section(header: Text("Budget Details")) {
-                        TextField("Name", text: $name)
-                        
-                        TextField("Icon (Emoji)", text: $icon)
-                            .keyboardType(.default)
-                        
-                        Toggle("Expense", isOn: $expense)
-                            .tint(Color("AccentColor"))
-                    }
-                    
-                    Section(header: Text("Amounts")) {
-                        VStack(alignment: .leading) {
-                            Text("Amount")
-                                .foregroundColor(.gray)
-                                .padding(.bottom, 0)
-                            TextField("Enter amount", text: $amountText)
-                                .keyboardType(.decimalPad)
+                VStack {
+                    Form {
+                        Section(header: Text("Budget Details")) {
+                            TextField("Name", text: $name)
+                            
+                            TextField("Icon (Emoji)", text: $icon)
+                                .keyboardType(.default)
+                            
+                            Toggle("Expense", isOn: $expense)
+                                .tint(Color("AccentColor"))
                         }
                         
-                        VStack(alignment: .leading) {
-                            Text("Left Amount")
-                                .foregroundColor(.gray)
-                                .padding(.bottom, 0)
-                            TextField("Left Amount", text: $leftAmountText)
-                                .keyboardType(.decimalPad)
+                        Section(header: Text("Amounts")) {
+                            VStack(alignment: .leading) {
+                                Text("Amount")
+                                    .foregroundColor(.gray)
+                                    .padding(.bottom, 0)
+                                TextField("Enter amount", text: $amountText)
+                                    .keyboardType(.decimalPad)
+                            }
+                            
+                            VStack(alignment: .leading) {
+                                Text("Left Amount")
+                                    .foregroundColor(.gray)
+                                    .padding(.bottom, 0)
+                                TextField("Left Amount", text: $leftAmountText)
+                                    .keyboardType(.decimalPad)
+                            }
                         }
-                    }
-                    
-                    Section(header: Text("Categories")) {
-                        ForEach(categories, id: \.id) { category in
-                            HStack {
-                                Text(category.icon)
-                                Text(category.name)
-                                    .font(.headline)
-                                    .foregroundColor(.primary)
-                                Spacer()
-                                if selectedCategoryIds.contains(category.id) {
-                                    Image(systemName: "checkmark")
-                                        .foregroundColor(Color("DarkBrownColor"))
+                        
+                        Section(header: Text("Categories")) {
+                            ForEach(categories, id: \.id) { category in
+                                HStack {
+                                    Text(category.icon)
+                                    Text(category.name)
+                                        .font(.headline)
+                                        .foregroundColor(.primary)
+                                    Spacer()
+                                    if selectedCategoryIds.contains(category.id) {
+                                        Image(systemName: "checkmark")
+                                            .foregroundColor(Color("DarkBrownColor"))
+                                    }
+                                }
+                                .padding()
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .stroke(selectedCategoryIds.contains(category.id) ? Color("AccentColor") : Color.clear, lineWidth: 2))
+                                .cornerRadius(8)
+                                .onTapGesture {
+                                    toggleCategorySelection(category: category)
                                 }
                             }
-                            .padding()
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 10)
-                                    .stroke(selectedCategoryIds.contains(category.id) ? Color("AccentColor") : Color.clear, lineWidth: 2))
-                            .cornerRadius(8)
-                            .onTapGesture {
-                                toggleCategorySelection(category: category)
-                            }
                         }
                     }
+                    
+                    Spacer()
+
+                    Button(action: validateAndSaveBudget) {
+                        Text("Done")
+                            .font(.headline)
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(Color("AccentColor"))
+                            .cornerRadius(8)
+                    }
+                    .padding(.horizontal, 20)
+                    .padding(.bottom, 20)
                 }
             }
             .navigationBarTitle(isNewBudget ? "New Budget" : "Edit Budget", displayMode: .inline)
-            .navigationBarItems(leading: Button("Cancel") {
+            .navigationBarItems(leading: Button(action: {
                 presentationMode.wrappedValue.dismiss()
-            }, trailing: Button("Save") {
-                validateAndSaveBudget()
-            })
+            }) {
+                Image(systemName: "arrow.backward")
+                Text("Back")
+            }
+            .foregroundColor(Color("AccentColor")))
             .alert(isPresented: $showAlert) {
                 Alert(
                     title: Text("Error"),
@@ -246,3 +264,4 @@ struct BudgetFormView: View {
         }
     }
 }
+

@@ -74,7 +74,6 @@ struct AccountsView: View {
     }
     
     private func resetNewAccountFlag() {
-        print("resetNewAccountFlag")
         isNewAccount = false
     }
 }

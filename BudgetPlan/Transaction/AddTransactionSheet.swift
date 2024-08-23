@@ -10,16 +10,16 @@ struct AddTransactionSheet: View {
     @Binding var isPresented: Bool
     @State private var amount: String = ""
     @State private var description: String = ""
-    @State private var selectedBankAccountName: String = "None" // Defaultna vrijednost
+    @State private var selectedBankAccountName: String = "None"
     @State private var created: Date = Date()
     @State private var isExpense: Bool = true
-    @State private var currency: String = Helper.getCurrencies().first ?? "USD"
+    @State private var currency: String = Helper.getCurrencies().first ?? "EUR"
     @State private var selectedCategory: CategoryViewModel?
     @State private var categories: [CategoryViewModel] = []
     @State private var bankAccounts: [String] = []
     @State private var showAlert = false
     @State private var alertMessage = ""
-    
+
     private let transactionManager = TransactionManager()
     private let categoryManager = CategoryManager()
     private let accountManager = AccountManager()
@@ -36,7 +36,7 @@ struct AddTransactionSheet: View {
                             .keyboardType(.decimalPad)
                         TextField("Description", text: $description)
                         Picker("Account", selection: $selectedBankAccountName) {
-                            Text("None").tag("None") // Omogućuje opciju "None"
+                            Text("None").tag("None")
                             ForEach(bankAccounts, id: \.self) { account in
                                 Text(account).tag(account)
                             }
@@ -50,17 +50,18 @@ struct AddTransactionSheet: View {
                         Toggle(isOn: $isExpense) {
                             Text("Is Expense")
                         }
+                        .tint(Color("AccentColor"))
                     }
 
                     Section(header: Text("Select Category")) {
                         ScrollView {
-                            FlowLayout(categories: categories, selectedCategory: $selectedCategory)
+                            FlowLayout(categories: categories, selectedCategory: $selectedCategory, backgroundColorName: "BackgroundColor")
                         }
                     }
                 }
-                
+
                 Button(action: {
-                    saveTransaction()
+                    validateAndSaveTransaction()
                 }) {
                     Text("Save")
                         .foregroundColor(.white)
@@ -71,9 +72,10 @@ struct AddTransactionSheet: View {
                 }
                 .padding()
                 .disabled(amount.isEmpty || description.isEmpty)
+                .opacity(amount.isEmpty || description.isEmpty ? 0.5 : 1.0)
             }
             .navigationBarTitle("Add Transaction", displayMode: .inline)
-            .navigationBarItems(leading: Button("Cancel") {
+            .navigationBarItems(leading: Button("Back") {
                 isPresented = false
             })
             .onAppear {
@@ -86,14 +88,15 @@ struct AddTransactionSheet: View {
         }
     }
 
-    private func saveTransaction() {
-        guard let amountValue = Double(amount) else {
-            alertMessage = "Please enter the amount correctly"
+    private func validateAndSaveTransaction() {
+        guard let amountValue = Double(amount), amountValue > 0 else {
+            alertMessage = "Please enter a valid amount greater than 0."
             showAlert = true
             return
         }
+
         let currencySymbol = Helper.getCurrencySymbol(for: currency)
-        
+
         var newTransaction = TransactionViewModel(
             amount: amountValue,
             description: description,
@@ -104,14 +107,12 @@ struct AddTransactionSheet: View {
             currency: currencySymbol,
             sorted: false,
             categoryIcon: ""
-            
         )
-        
+
         transactionManager.addNewTransaction(transaction: newTransaction) { error in
             if let error = error {
                 alertMessage = "Error saving transaction: \(error.localizedDescription)"
                 showAlert = true
-                isPresented = false
                 return
             }
 
@@ -143,24 +144,25 @@ struct AddTransactionSheet: View {
             }
         }
     }
-    
+
     private func fetchCategories() {
         categoryManager.getAllCategories { categories, error in
             if let error = error {
-                print("Error fetching categories: \(error.localizedDescription)")
+                alertMessage = "Error fetching categories: \(error.localizedDescription)"
+                showAlert = true
             } else {
                 self.categories = categories ?? []
             }
         }
     }
-    
+
     private func fetchBankAccounts() {
         accountManager.getAllAccounts { accounts, error in
             if let error = error {
-                print("Error fetching bank accounts: \(error.localizedDescription)")
+                alertMessage = "Error fetching bank accounts: \(error.localizedDescription)"
+                showAlert = true
             } else {
                 self.bankAccounts = accounts?.map { $0.accountName } ?? []
-                // Ako postoji barem jedan bankovni račun, postavite prvi kao odabrani
                 if let firstAccount = bankAccounts.first {
                     selectedBankAccountName = firstAccount
                 }
@@ -170,13 +172,16 @@ struct AddTransactionSheet: View {
 
     private func updateBudgetForCategory(_ category: CategoryViewModel, transactionAmount: Double, completion: @escaping (Bool) -> Void) {
         guard let budgetId = category.budgetId else {
+            alertMessage = "Error: No budget associated with this category."
+            showAlert = true
             completion(false)
             return
         }
 
         budgetManager.getAllBudgets { budgets, error in
             if let error = error {
-                print("Error fetching budgets: \(error.localizedDescription)")
+                alertMessage = "Error fetching budgets: \(error.localizedDescription)"
+                showAlert = true
                 completion(false)
                 return
             }
@@ -191,18 +196,26 @@ struct AddTransactionSheet: View {
 
                     budgetManager.updateBudget(budget: budget) { error in
                         if let error = error {
-                            print("Error updating budget: \(error.localizedDescription)")
+                            alertMessage = "Error updating budget: \(error.localizedDescription)"
+                            showAlert = true
                             completion(false)
                         } else {
                             completion(true)
                         }
                     }
                 } else {
+                    alertMessage = "Error: No matching budget found."
+                    showAlert = true
                     completion(false)
                 }
             } else {
+                alertMessage = "Error: No budgets available."
+                showAlert = true
                 completion(false)
             }
         }
     }
 }
+
+
+

@@ -18,83 +18,79 @@ struct BudgetsView: View {
     @State private var isNewBudget: Bool = false
 
     var body: some View {
-        NavigationView {
-            ZStack {
-                Color("BackgroundColor")
-                    .edgesIgnoringSafeArea(.all)
+        VStack {
+    
+            HStack {
+                Text("Budgets")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                Spacer()
+                Button(action: {
+                    selectedBudget = BudgetsViewModel(id: UUID().uuidString, name: "", categoryIds: [], amount: 0, leftAmount: 0, expense: currentExpense, currency: "", icon: "")
+                    isNewBudget = true
+                }) {
+                    Image(systemName: "plus")
+                        .imageScale(.medium)
+                        .padding(5)
+                        .background(Color("AccentColor"))
+                        .clipShape(Circle())
+                        .foregroundColor(.white)
+                }
+            }
+            .padding(.top, 20)
+            .padding(.horizontal)
+
+            // Picker za odabir tabova (Expenses/Incomes)
+            Picker("Budgets", selection: $selectedTab) {
+                Text("Expenses").tag(true)
+                Text("Incomes").tag(false)
+            }
+            .pickerStyle(SegmentedPickerStyle())
+            .padding(.horizontal)
+            .padding(.top, 15)
+            .onChange(of: selectedTab) { newValue in
+                currentExpense = newValue
+            }
+
+            ScrollView {
                 VStack {
-                    Picker("Budgets", selection: $selectedTab) {
-                        Text("Expenses").tag(true)
-                        Text("Incomes").tag(false)
-                    }
-                    .pickerStyle(SegmentedPickerStyle())
-                    .padding()
-                    .onChange(of: selectedTab) { newValue in
-                        currentExpense = newValue
-                    }
-                    
-                    ScrollView {
-                        VStack {
-                            ForEach(filteredBudgets) { budget in
-                                BudgetCardView(budget: budget)
-                                    .padding(.horizontal)
-                                    .padding(.vertical, 5)
-                                    .onTapGesture {
-                                        print("Selected budget: \(budget.name)")
-                                        selectedBudget = budget
-                                        isNewBudget = false
-                                    }
+                    ForEach(filteredBudgets) { budget in
+                        BudgetCardView(budget: budget)
+                            .padding(.horizontal)
+                            .padding(.vertical, 5)
+                            .onTapGesture {
+                                print("Selected budget: \(budget.name)")
+                                selectedBudget = budget
+                                isNewBudget = false
                             }
-                        }
                     }
                 }
-            }
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .principal) {
-                    HStack {
-                        Text("Budgets")
-                            .font(.largeTitle)
-                            .fontWeight(.bold)
-                        Spacer()
-                        
-                        Button(action: {
-                            selectedBudget = BudgetsViewModel(id: UUID().uuidString, name: "", categoryIds: [], amount: 0, leftAmount: 0, expense: currentExpense, currency: "", icon: "")
-                            isNewBudget = true
-                        }) {
-                            Image(systemName: "plus")
-                                .imageScale(.medium)
-                                .padding(5)
-                                .background(Color("AccentColor"))
-                                .clipShape(Circle())
-                                .foregroundColor(.white)
-                        }
-                    }.padding(.top, 50)
-                }
-            }
-            .onAppear {
-                loadBudgets()
-                loadCategories()
-            }
-            .sheet(item: $selectedBudget, onDismiss: {
-                isNewBudget = false
-            }) { budget in
-                BudgetFormView(
-                    budget: budget,
-                    isNewBudget: isNewBudget,
-                    onSave: { savedBudget in
-                        if let index = budgets.firstIndex(where: { $0.id == savedBudget.id }) {
-                            budgets[index] = savedBudget
-                        } else {
-                            budgets.append(savedBudget)
-                        }
-                        loadCategories()
+            }.frame(maxHeight: .infinity)
+            
+        }
+        .background(Color("BackgroundColor").edgesIgnoringSafeArea(.all))
+        .onAppear {
+            loadBudgets()
+            loadCategories()
+        }
+        .sheet(item: $selectedBudget, onDismiss: {
+            isNewBudget = false
+        }) { budget in
+            BudgetFormView(
+                budget: budget,
+                isNewBudget: isNewBudget,
+                onSave: { savedBudget in
+                    if let index = budgets.firstIndex(where: { $0.id == savedBudget.id }) {
+                        budgets[index] = savedBudget
+                    } else {
+                        budgets.append(savedBudget)
                     }
-                )
-            }
+                    loadCategories()
+                }
+            )
         }
     }
-        
+
     private var filteredBudgets: [BudgetsViewModel] {
         budgets.filter { $0.expense == selectedTab }
     }
