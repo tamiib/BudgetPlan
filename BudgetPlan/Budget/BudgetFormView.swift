@@ -108,7 +108,7 @@ struct BudgetFormView: View {
                     Spacer()
 
                     Button(action: validateAndSaveBudget) {
-                        Text("Done")
+                        Text("Save")
                             .font(.headline)
                             .foregroundColor(.white)
                             .frame(maxWidth: .infinity)
