@@ -65,7 +65,7 @@
 		0E2FCDB92C347D0A006F5FB8 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		0E2FCDBF2C347DB1006F5FB8 /* AccountsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountsView.swift; sourceTree = "<group>"; };
 		0E2FCDC12C347DCD006F5FB8 /* BudgetsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetsView.swift; sourceTree = "<group>"; };
-		0E2FCDC32C347E03006F5FB8 /* TransactionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsView.swift; sourceTree = "<group>"; };
+		0E2FCDC32C347E03006F5FB8 /* TransactionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsView.swift; sourceTree = "<group>"; tabWidth = 4; };
 		0E2FCDC52C3496DD006F5FB8 /* TransactionCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionCardView.swift; sourceTree = "<group>"; };
 		0E3524A92C6D70CF006DA545 /* AddTransactionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransactionSheet.swift; sourceTree = "<group>"; };
 		0E3524AC2C713FEC006DA545 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };

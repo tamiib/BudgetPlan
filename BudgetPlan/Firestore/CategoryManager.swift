@@ -85,5 +85,34 @@ class CategoryManager {
             }
         }
     }
+    
+    func getAllAssignedCategories(completion: @escaping ([CategoryViewModel]?, Error?) -> Void) {
+        checkUserAuthentication { userID in
+            guard let userID = userID else {
+                completion(nil, NSError(domain: "", code: 401, userInfo: [NSLocalizedDescriptionKey: "No authenticated user"]))
+                return
+            }
+            
+            self.db.collection(self.categoryCollection).whereField("userId", isEqualTo: userID).getDocuments { (querySnapshot, error) in
+                if let error = error {
+                    completion(nil, error)
+                } else {
+                    var categories: [CategoryViewModel] = []
+                    for document in querySnapshot!.documents {
+                        let data = document.data()
+                        let id = data["id"] as? String ?? ""
+                        let name = data["name"] as? String ?? ""
+                        let icon = data["icon"] as? String ?? ""
+                        if let budgetId = data["budgetId"] as? String, !budgetId.isEmpty {
+                            let category = CategoryViewModel(id: id, name: name, icon: icon, budgetId: budgetId)
+                            categories.append(category)
+                        }
+                    }
+                    completion(categories, nil)
+                }
+            }
+        }
+    }
+
 }
 

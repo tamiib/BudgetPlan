@@ -18,36 +18,146 @@
             endingLineNumber = "29"
             landmarkName = "signIn()"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "9368D85F-8AF4-447F-A95D-7F22B34DFC76"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BudgetPlan/Firestore/AccountManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "52"
+            endingLineNumber = "52"
+            landmarkName = "addAccount(_:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "9F3FEE19-1E15-4C70-A451-73C222834B95"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BudgetPlan/Firestore/AccountManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "25"
+            endingLineNumber = "25"
+            landmarkName = "getAllAccounts(completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A92F365D-F37C-48A0-B84C-12F2B4C255A1"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BudgetPlan/Firestore/AccountManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "53"
+            endingLineNumber = "53"
+            landmarkName = "addAccount(_:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "73ED49A2-C4EE-4391-B607-C3B48A1F5E17"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BudgetPlan/Firestore/AccountManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "58"
+            endingLineNumber = "58"
+            landmarkName = "addAccount(_:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "B8CA3555-6E0F-4A1E-8D42-24C946C65941"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BudgetPlan/Firestore/AccountManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "66"
+            endingLineNumber = "66"
+            landmarkName = "addAccount(_:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C587C8D4-9DA2-4113-90DA-AE139690E795"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BudgetPlan/Firestore/AccountManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "79"
+            endingLineNumber = "79"
+            landmarkName = "updateAccount(_:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "AE02A8EB-EB69-45F0-BF34-DB7DC53C309F"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BudgetPlan/Firestore/AccountManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "85"
+            endingLineNumber = "85"
+            landmarkName = "updateAccount(_:completion:)"
+            landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "4DF3A650-1964-47AC-9469-0932B568D6F2 - 8da64ce92ce79fc3"
+                  uuid = "AE02A8EB-EB69-45F0-BF34-DB7DC53C309F - b4158c9c9b196392"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "(1) suspend resume partial function for BudgetPlan.SignInEmailViewModel.signIn() async throws -&gt; ()"
+                  symbolName = "closure #1 (Swift.Optional&lt;Swift.String&gt;) -&gt; () in BudgetPlan.AccountManager.updateAccount(_: BudgetPlan.AccountViewModel, completion: (Swift.Optional&lt;Swift.Error&gt;) -&gt; ()) -&gt; ()"
                   moduleName = "BudgetPlan"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/tamarabarisic/Desktop/BudgetPlan/BudgetPlan/BudgetPlan/Authentification/SignInEmailView.swift"
+                  urlString = "file:///Users/tamarabarisic/Desktop/BudgetPlan/BudgetPlan/BudgetPlan/Firestore/AccountManager.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "30"
-                  endingLineNumber = "30"
-                  offsetFromSymbolStart = "556">
+                  startingLineNumber = "85"
+                  endingLineNumber = "85">
                </Location>
                <Location
-                  uuid = "4DF3A650-1964-47AC-9469-0932B568D6F2 - 661169afc15b03d1"
+                  uuid = "AE02A8EB-EB69-45F0-BF34-DB7DC53C309F - 104f4a69472e2a0f"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "(3) suspend resume partial function for BudgetPlan.SignInEmailViewModel.signIn() async throws -&gt; ()"
+                  symbolName = "closure #1 (Swift.Optional&lt;Swift.Error&gt;) -&gt; () in closure #1 (Swift.Optional&lt;Swift.String&gt;) -&gt; () in BudgetPlan.AccountManager.updateAccount(_: BudgetPlan.AccountViewModel, completion: (Swift.Optional&lt;Swift.Error&gt;) -&gt; ()) -&gt; ()"
                   moduleName = "BudgetPlan"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/tamarabarisic/Desktop/BudgetPlan/BudgetPlan/BudgetPlan/Authentification/SignInEmailView.swift"
+                  urlString = "file:///Users/tamarabarisic/Desktop/BudgetPlan/BudgetPlan/BudgetPlan/Firestore/AccountManager.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "30"
-                  endingLineNumber = "30"
-                  offsetFromSymbolStart = "72">
+                  startingLineNumber = "86"
+                  endingLineNumber = "86">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -55,125 +165,32 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "057936ED-3982-4027-A6B9-7059757963AE"
-            shouldBeEnabled = "No"
+            uuid = "DCD305F6-9223-4A91-8728-C71931F96331"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "BudgetPlan/Authentification/AuthenticationManager.swift"
+            filePath = "BudgetPlan/Firestore/AccountManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "39"
-            endingLineNumber = "39"
-            landmarkName = "signInUser(email:password:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "057936ED-3982-4027-A6B9-7059757963AE - 465817cc0370d41d"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(1) suspend resume partial function for BudgetPlan.AuthenticationManager.signInUser(email: Swift.String, password: Swift.String) async throws -&gt; BudgetPlan.AuthDataResultModel"
-                  moduleName = "BudgetPlan"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/tamarabarisic/Desktop/BudgetPlan/BudgetPlan/BudgetPlan/Authentification/AuthenticationManager.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "39"
-                  endingLineNumber = "39"
-                  offsetFromSymbolStart = "116">
-               </Location>
-               <Location
-                  uuid = "057936ED-3982-4027-A6B9-7059757963AE - fe55d898ead36ef8"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(2) await resume partial function for BudgetPlan.AuthenticationManager.signInUser(email: Swift.String, password: Swift.String) async throws -&gt; BudgetPlan.AuthDataResultModel"
-                  moduleName = "BudgetPlan"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/tamarabarisic/Desktop/BudgetPlan/BudgetPlan/BudgetPlan/Authentification/AuthenticationManager.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "39"
-                  endingLineNumber = "39"
-                  offsetFromSymbolStart = "52">
-               </Location>
-               <Location
-                  uuid = "057936ED-3982-4027-A6B9-7059757963AE - edf54e874b48881b"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(3) suspend resume partial function for BudgetPlan.AuthenticationManager.signInUser(email: Swift.String, password: Swift.String) async throws -&gt; BudgetPlan.AuthDataResultModel"
-                  moduleName = "BudgetPlan"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/tamarabarisic/Desktop/BudgetPlan/BudgetPlan/BudgetPlan/Authentification/AuthenticationManager.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "39"
-                  endingLineNumber = "39"
-                  offsetFromSymbolStart = "60">
-               </Location>
-               <Location
-                  uuid = "057936ED-3982-4027-A6B9-7059757963AE - b820121a2fbcae1a"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(4) suspend resume partial function for BudgetPlan.AuthenticationManager.signInUser(email: Swift.String, password: Swift.String) async throws -&gt; BudgetPlan.AuthDataResultModel"
-                  moduleName = "BudgetPlan"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/tamarabarisic/Desktop/BudgetPlan/BudgetPlan/BudgetPlan/Authentification/AuthenticationManager.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "39"
-                  endingLineNumber = "39"
-                  offsetFromSymbolStart = "52">
-               </Location>
-               <Location
-                  uuid = "057936ED-3982-4027-A6B9-7059757963AE - b820121a2fbcae1a"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(4) suspend resume partial function for BudgetPlan.AuthenticationManager.signInUser(email: Swift.String, password: Swift.String) async throws -&gt; BudgetPlan.AuthDataResultModel"
-                  moduleName = "BudgetPlan"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/tamarabarisic/Desktop/BudgetPlan/BudgetPlan/BudgetPlan/Authentification/AuthenticationManager.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "39"
-                  endingLineNumber = "39"
-                  offsetFromSymbolStart = "136">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "A4B8DAE6-178C-42AC-B239-CF283727353C"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "BudgetPlan/Authentification/AuthenticationManager.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "40"
-            endingLineNumber = "40"
-            landmarkName = "signInUser(email:password:)"
+            startingLineNumber = "86"
+            endingLineNumber = "86"
+            landmarkName = "updateAccount(_:completion:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "2E471B36-FA60-45E8-8E49-1774E5024C6A"
+            uuid = "5034A1E0-3050-4213-9AE4-30D853E622DB"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "BudgetPlan/Authentification/AuthenticationManager.swift"
+            filePath = "BudgetPlan/Account/AccountViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "47"
-            endingLineNumber = "47"
-            landmarkName = "getAuthenticatedUser()"
+            startingLineNumber = "19"
+            endingLineNumber = "19"
+            landmarkName = "init(id:accountName:accountNumber:group:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

@@ -23,7 +23,7 @@ struct AccountsView: View {
                 Spacer()
                 Button(action: {
                     isNewAccount = true
-                    selectedAccount = AccountViewModel(accountName: "", accountNumber: "", group: false)
+                    selectedAccount = AccountViewModel(id: UUID().uuidString,accountName: "", accountNumber: "", group: false)
                 }) {
                     Text("Add new")
                         .foregroundColor(Color("AccentColor"))

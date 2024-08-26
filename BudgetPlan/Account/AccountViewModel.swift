@@ -9,7 +9,7 @@ import Foundation
 import FirebaseAuth
 
 struct AccountViewModel: Identifiable, Equatable {
-    var id: String
+    let id: String
     var accountName: String
     var accountNumber: String
     var group: Bool

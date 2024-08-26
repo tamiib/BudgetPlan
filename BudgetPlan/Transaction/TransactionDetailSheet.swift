@@ -94,7 +94,7 @@ struct TransactionDetailSheet: View {
     }
     
     private func fetchCategories() {
-        categoryManager.getAllCategories { categories, error in
+        categoryManager.getAllAssignedCategories { categories, error in
             if let error = error {
                 print("Error fetching categories: \(error.localizedDescription)")
             } else {

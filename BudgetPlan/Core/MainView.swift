@@ -18,9 +18,7 @@ struct MainView: View {
             .tabItem {
                 VStack {
                     Image(systemName: "list.clipboard")
-                        .foregroundColor(Color("SecondaryColor"))
                     Text("Transactions")
-                        .foregroundColor(Color("SecondaryColor"))
                 }
             }
 
@@ -30,9 +28,7 @@ struct MainView: View {
             .tabItem {
                 VStack {
                     Image(systemName: "bag")
-                        .foregroundColor(Color("SecondaryColor"))
                     Text("Budgets")
-                        .foregroundColor(Color("SecondaryColor"))
                 }
             }
 
@@ -42,10 +38,7 @@ struct MainView: View {
             .tabItem {
                 VStack {
                     Image(systemName: "rectangle.grid.2x2")
-                        .foregroundColor(Color("SecondaryColor"))
                     Text("Category")
-                        .foregroundColor(Color("SecondaryColor"))
-                    
                 }
             }
 
@@ -55,9 +48,7 @@ struct MainView: View {
             .tabItem {
                 VStack {
                     Image(systemName: "gear")
-                        .foregroundColor(Color("SecondaryColor"))
                     Text("Settings")
-                        .foregroundColor(Color("SecondaryColor"))
                 }
             }
         }

@@ -56,6 +56,7 @@ class AccountManager {
             }
             
             let data: [String: Any] = [
+                "id": account.id,
                 "accountName": account.accountName,
                 "accountNumber": account.accountNumber,
                 "group": account.group,

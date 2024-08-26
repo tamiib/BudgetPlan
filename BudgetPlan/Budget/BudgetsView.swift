@@ -40,7 +40,6 @@ struct BudgetsView: View {
             .padding(.top, 20)
             .padding(.horizontal)
 
-            // Picker za odabir tabova (Expenses/Incomes)
             Picker("Budgets", selection: $selectedTab) {
                 Text("Expenses").tag(true)
                 Text("Incomes").tag(false)
@@ -120,13 +119,11 @@ struct BudgetsView: View {
             print("Fetching valid categories for existing budget with ID: \(selectedBudget?.id ?? "nil")")
             let assignedCategories = categories.filter { selectedBudget?.categoryIds.contains($0.id) ?? false }
             let unassignedCategories = categories.filter { $0.budgetId == nil || $0.budgetId?.isEmpty == true }
-            print("Assigned categories: \(assignedCategories.map { $0.name })")
-            print("Unassigned categories: \(unassignedCategories.map { $0.name })")
+          
             return assignedCategories + unassignedCategories
         } else {
             print("Fetching valid categories for new budget")
             let unassignedCategories = categories.filter { $0.budgetId == nil || $0.budgetId?.isEmpty == true }
-            print("Unassigned categories: \(unassignedCategories.map { $0.name })")
             return unassignedCategories
         }
     }
